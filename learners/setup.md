@@ -7,48 +7,51 @@ the data sets the Learner needs to have installed.
 
 ## Data Sets
 
-<!--
-FIXME: place any data you want learners to use in `episodes/data` and then use
-       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
-       link to it, replacing the example.com link.
--->
-Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop
+Data is from Zenodo
+Link to paper here with description
+
+
+
+:::: prereq
+
+Some knowledge of R and RNA-seq analysis is assumed.
+
+This lesson assumes you have R and RStudio installed on your computer.
+
+
+::::
+
 
 ## Software Setup
 
 ::::::::::::::::::::::::::::::::::::::: discussion
 
-### Details
+If you not have R and RStudio already installed, please download them here:
 
-Setup for different systems can be presented in dropdown menus via a `solution`
-tag. They will join to this discussion block, so you can give a general overview
-of the software used in this lesson here and fill out the individual operating
-systems (and potentially add more, e.g. online setup) in the solutions blocks.
+[Download and install the latest version of R using the UniMelb mirror](https://cran.ms.unimelb.edu.au/).
+[Download and install RStudio](https://posit.co/download/rstudio-desktop/#download).
+
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::: solution
 
-### Windows
+## Install Libraries
 
-Use PuTTY
-
-:::::::::::::::::::::::::
-
-:::::::::::::::: solution
-
-### MacOS
-
-Use Terminal.app
-
-:::::::::::::::::::::::::
+```r
 
 
-:::::::::::::::: solution
+install.packages('ggplot2')
 
-### Linux
 
-Use Terminal
+   install.packages("BiocManager")
+   BiocManager::install(c("edgeR", "goseq", "fgsea", 
+   "EGSEA","clusterProfiler",'org.Mm.eg.db','pathview','edgeR','STRINGdb'))
+   
+   
+   # If RegEnrich is not loading try installing the following:
+   #BiocManager::install("impute") # dependency for regenrich
+  #BiocManager::install("preprocessCore") # also dependency
+   
 
-:::::::::::::::::::::::::
+```
 

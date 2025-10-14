@@ -1,0 +1,89 @@
+---
+title: 'Gene set enrichment analysis with `fgsea`'
+teaching: 10
+exercises: 2
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- hello!
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- To learn
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+```{r, message=FALSE,warning=FALSE,echo=FALSE}
+
+library(edgeR)
+library(goseq)
+library(fgsea)
+library(EGSEA)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ggplot2)
+library(enrichplot)
+library(pathview)
+library(edgeR)
+library(impute)
+library(preprocessCore)
+library(RegEnrich)
+library(STRINGdb)
+
+debasal <- read.csv("data/limma-voom_basalpregnant-basallactate", header = TRUE, sep = "\t")
+deluminal <- read.csv("data/limma-voom_luminalpregnant-luminallactate", header = TRUE, sep = "\t")
+seqdata <- read.csv("data/seqdata", header = TRUE, sep = "\t")
+load("data/mouse_hallmark_sets.RData")
+# loads as Mm.H
+
+factordata <- read.table("data/factordata", header = TRUE, sep = "\t")
+filteredcounts <- read.csv("data/limma-voom_filtered_counts", header = TRUE, sep = "\t")
+
+
+```
+
+
+## Gene Set Enrichment Analysis with `fgsea`
+
+Now, let's perform Gene Set Enrichment Analysis using the `fgsea` package.
+
+```{r fgsea-analysis, message=FALSE, warning=FALSE}
+ #Prepare ranked list of genes
+rankedgenes_df <- debasal[order(debasal$t, decreasing = FALSE), c("ENTREZID", "t")]
+rankedgenes <- rankedgenes_df$t
+names(rankedgenes) <- rankedgenes_df$ENTREZID
+
+# Perform fgsea
+fgseaRes <- fgsea(pathways = Mm.H, stats = rankedgenes, minSize = 15)
+
+
+
+# Plot
+# Code from vignette
+
+topPathwaysUp <- fgseaRes[ES > 0][head(order(pval), n=10), pathway]
+topPathwaysDown <- fgseaRes[ES < 0][head(order(pval), n=10), pathway]
+topPathways <- c(topPathwaysUp, rev(topPathwaysDown))
+plotGseaTable(Mm.H[topPathways], rankedgenes, fgseaRes, 
+              gseaParam=0.5)
+
+# Plot the top pathway
+
+plotEnrichment(Mm.H[[topPathwaysUp[1]]], rankedgenes) + labs(title = topPathwaysUp[1])
+
+
+```
+
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Use `.md` files for episodes when you want static content
+- Use `.Rmd` files for episodes when you need to generate output
+- Run `sandpaper::check_lesson()` to identify any issues with your lesson
+- Run `sandpaper::build_lesson()` to preview your lesson locally
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+

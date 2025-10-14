@@ -64,17 +64,24 @@ contact: 'team@carpentries.org'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
+episodes:
 - introduction.Rmd
+- clusterprofiler.Rmd
+- section1.Rmd
+- fgsea.Rmd
+- regenrich.Rmd
+- stringdb.Rmd
+- conclusion.Rmd
+
 
 # Information for Learners
-learners: 
+learners:
 
 # Information for Instructors
-instructors: 
+instructors:
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #

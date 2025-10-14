@@ -1,111 +1,107 @@
 ---
-title: 'introduction'
+title: 'Introduction'
 teaching: 10
 exercises: 2
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- What data are we using?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Learn what we're doing
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Introduction
 
-This is a lesson created via The Carpentries Workbench. It is written in
-[Pandoc-flavored Markdown][pandoc] for static files (with extension `.md`) and
-[R Markdown][r-markdown] for dynamic files that can render code into output
-(with extension `.Rmd`). Please refer to the [Introduction to The Carpentries
-Workbench][carpentries-workbench] for full documentation.
+Sometimes there is quite a long list of genes to interpret after a differential expression analysis, and it is usually not feasible to go through the list one gene at a time trying to understand its biological function. A common downstream procedure is gene set testing, which aims to understand which pathways/gene networks the differentially expressed genes are implicated in. There are many different gene set testing methods that can be applied and it can be useful to try several.
 
-What you need to know is that there are three sections required for a valid
-Carpentries lesson template:
+The purpose of this tutorial is to demonstrate how to perform gene set testing using tools in R. The data comes from a Nature Cell Biology paper, EGF-mediated induction of Mcl-1 at the switch to lactation is essential for alveolar cell survival (<https://www.ncbi.nlm.nih.gov/pubmed/25730472>), Fu et al. 2015. That study examined the expression profiles of basal and luminal cells in the mammary gland of virgin, pregnant and lactating mice.
 
- 1. `questions` are displayed at the beginning of the episode to prime the
-    learner for the content.
- 2. `objectives` are the learning objectives for an episode displayed with
-    the questions.
- 3. `keypoints` are displayed at the end of the episode to reinforce the
-    objectives.
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: instructor
 
-Inline instructor notes can help inform instructors of timing challenges
-associated with the lessons. They appear in the "Instructor View"
+## Load libraries and data
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+*Note: sometimes the loading of data of Zenodo times out so best not to use it for compiling. Should acknowledge the source though* 
 
-::::::::::::::::::::::::::::::::::::: challenge 
+We begin by loading required packages.
 
-## Challenge 1: Can you do it?
 
-What is the output of this command?
+```{r, message=FALSE,warning=FALSE}
 
-```r
-paste("This", "new", "lesson", "looks", "good")
+library(edgeR)
+library(goseq)
+library(fgsea)
+library(EGSEA)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ggplot2)
+library(enrichplot)
+library(pathview)
+library(edgeR)
+library(impute)
+library(preprocessCore)
+library(RegEnrich)
+
+
 ```
 
-:::::::::::::::::::::::: solution 
+Data can be downloaded directly from Zenodo here:
 
-## Output
- 
-```output
-[1] "This new lesson looks good"
+```{r, eval=FALSE}
+
+# dataurl <- "https://zenodo.org/record/2596382/files/"
+#     
+# debasal <- read.csv(paste0(dataurl,"limma-voom_basalpregnant-basallactate"), header = TRUE, sep = "\t")
+# deluminal <- read.csv(paste0(dataurl,"limma-voom_luminalpregnant-luminallactate"), header = TRUE, sep = "\t")
+# seqdata <- read.csv(paste0(dataurl,"seqdata"), header = TRUE, sep = "\t")
+# load(paste0(dataurl,"mouse_hallmark_sets"))
+# # loads as Mm.H
+# # may not load directly
+
+# 
+# factordata <- read.table(paste0(dataurl,"factordata"), header = TRUE, sep = "\t")
+# filteredcounts <- read.csv(paste0(dataurl,"limma-voom_filtered_counts"), header = TRUE, sep = "\t")
+
 ```
 
-:::::::::::::::::::::::::::::::::
+However, we have provided this data within the github repo:
 
+```{r}
 
-## Challenge 2: how do you nest solutions within challenge blocks?
+debasal <- read.csv("data/limma-voom_basalpregnant-basallactate", header = TRUE, sep = "\t")
+deluminal <- read.csv("data/limma-voom_luminalpregnant-luminallactate", header = TRUE, sep = "\t")
+seqdata <- read.csv("data/seqdata", header = TRUE, sep = "\t")
+load("data/mouse_hallmark_sets.RData")
+# loads as Mm.H
 
-:::::::::::::::::::::::: solution 
+factordata <- read.table("data/factordata", header = TRUE, sep = "\t")
+filteredcounts <- read.csv("data/limma-voom_filtered_counts", header = TRUE, sep = "\t")
 
-You can add a line with at least three colons and a `solution` tag.
-
-:::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::
-
-## Figures
-
-You can include figures generated from R Markdown:
-
-```{r pyramid, fig.alt = "pie chart illusion of a pyramid", fig.cap = "Sun arise each and every morning"}
-pie(
-  c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
-  init.angle = 315, 
-  col = c("deepskyblue", "yellow", "yellow3"), 
-  border = FALSE
-)
 ```
-Or you can use pandoc markdown for static figures with the following syntax:
 
-`![optional caption that appears below the figure](figure url){alt='alt text for
-accessibility purposes'}`
+We will use several files for this analysis:
 
-![You belong in The Carpentries!](https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg){alt='Blue Carpentries hex person logo with no text.'}
+-   Differentially expressed results files (genes in rows, logFC and P values in columns)
+-   Sample information file (sample id, group)
+-   Gene lengths file (genes, lengths)
+-   Filtered counts file (genes in rows, counts for samples in columns, with lowly expressed genes removed)
+-   Gene sets file for MSigDB Hallmark collection for mouse (rdata)
 
-## Math
 
-One of our episodes contains $\LaTeX$ equations when describing how to create
-dynamic reports with {knitr}, so we now use mathjax to describe this:
 
-`$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$
 
-Cool, right?
+## Commonly used analyses
+
+*Brief explanation of what we'll be doing and other types of analysis*
+
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

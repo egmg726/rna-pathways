@@ -1,0 +1,86 @@
+---
+title: 'Interaction networks with `StringDB`'
+teaching: 10
+exercises: 2
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- 
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- 
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+```{r, message=FALSE,warning=FALSE,echo=FALSE}
+
+library(edgeR)
+library(goseq)
+library(fgsea)
+library(EGSEA)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ggplot2)
+library(enrichplot)
+library(pathview)
+library(edgeR)
+library(impute)
+library(preprocessCore)
+library(RegEnrich)
+library(STRINGdb)
+
+debasal <- read.csv("data/limma-voom_basalpregnant-basallactate", header = TRUE, sep = "\t")
+deluminal <- read.csv("data/limma-voom_luminalpregnant-luminallactate", header = TRUE, sep = "\t")
+seqdata <- read.csv("data/seqdata", header = TRUE, sep = "\t")
+load("data/mouse_hallmark_sets.RData")
+# loads as Mm.H
+
+factordata <- read.table("data/factordata", header = TRUE, sep = "\t")
+filteredcounts <- read.csv("data/limma-voom_filtered_counts", header = TRUE, sep = "\t")
+
+
+```
+
+*Note: timeouts occurring and not working properly*
+
+## Interaction networks with `StringDB`
+
+```{r}
+
+
+# Load the STRINGdb package
+
+
+# Initialize STRINGdb for mouse (taxonomy ID: 10090)
+string_db <- STRINGdb$new(version = "12", species = 10090, score_threshold = 400, input_directory = "")
+
+# Prepare data: select top 200 DE genes (by adjusted P value)
+top200 <- debasal[order(debasal$adj.P.Val), ][1:200, ]
+top200_mapped <- string_db$map(top200, "ENTREZID", removeUnmappedRows = TRUE)
+
+# Plot the protein interaction network
+string_db$plot_network(top200_mapped$STRING_id)
+
+# Get functional enrichment (GO, KEGG, Reactome)
+enrichment <- string_db$get_enrichment(top200_mapped$STRING_id)
+head(enrichment)
+
+
+# Optional: visualize one cluster (example: cluster 1)
+cluster1 <- clusters[[1]]
+string_db$plot_network(cluster1)
+
+
+```
+
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- 
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+

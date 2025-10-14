@@ -1,0 +1,173 @@
+---
+title: 'KEGG enrichment analysis with `clusterProfiler`'
+teaching: 10
+exercises: 2
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- How do we analyze differentially expressed genes (DEGs) using pathway analysis?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Learn how to interpret DEGs using gene set testing in R.
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+```{r, message=FALSE,warning=FALSE,echo=FALSE}
+
+library(edgeR)
+library(goseq)
+library(fgsea)
+library(EGSEA)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ggplot2)
+library(enrichplot)
+library(pathview)
+library(edgeR)
+library(impute)
+library(preprocessCore)
+library(RegEnrich)
+
+debasal <- read.csv("data/limma-voom_basalpregnant-basallactate", header = TRUE, sep = "\t")
+deluminal <- read.csv("data/limma-voom_luminalpregnant-luminallactate", header = TRUE, sep = "\t")
+seqdata <- read.csv("data/seqdata", header = TRUE, sep = "\t")
+load("data/mouse_hallmark_sets.RData")
+# loads as Mm.H
+
+factordata <- read.table("data/factordata", header = TRUE, sep = "\t")
+filteredcounts <- read.csv("data/limma-voom_filtered_counts", header = TRUE, sep = "\t")
+
+
+debasal_genelist <- debasal$logFC
+names(debasal_genelist) <- debasal$ENTREZID
+debasal_genelist <- sort(debasal_genelist, decreasing = TRUE)
+
+
+
+
+
+```
+
+
+
+## KEGG analysis
+
+Check to make sure we're using the right term: (can explain more about how to find the code as well)
+
+```{r}
+
+kegg_organism <- "mmu"
+
+search_kegg_organism(kegg_organism, by='kegg_code')
+
+```
+
+We'll use the enrichKEGG function to look the organism:
+
+```{r}
+
+kk <- enrichKEGG(gene         = names(debasal_genelist)[1:500],
+                 organism     = kegg_organism,
+                 pvalueCutoff = 0.05)
+head(kk)
+
+
+
+```
+
+```{r}
+
+
+
+kk2 <- gseKEGG(geneList     = debasal_genelist,
+               organism     = kegg_organism,
+               nPerm        = 10000,
+               minGSSize    = 3,
+               maxGSSize    = 800,
+               pvalueCutoff = 0.05,
+               pAdjustMethod = "none",
+               keyType       = "ncbi-geneid")
+
+
+```
+
+```{r}
+
+dotplot(kk2, showCategory = 10, title = "Enriched Pathways" , split=".sign") + facet_grid(.~.sign)
+
+
+```
+
+```{r}
+
+kk3 <- pairwise_termsim(kk2)
+
+emapplot(kk3)
+
+```
+
+```{r}
+
+cnetplot(kk3, categorySize="pvalue")
+
+
+```
+
+```{r}
+
+ridgeplot(kk3) + labs(x = "enrichment distribution")
+
+```
+
+```{r}
+
+head(kk3)
+
+```
+
+You can see the top pathways, you can get the top pathway ID with the ID column.
+
+
+```{r}
+
+# There must be a function that gets the results -> not ideal code
+kk3@result$ID[1]
+
+```
+
+
+```{r, eval=FALSE}
+
+
+
+# Produce the native KEGG plot (PNG)
+mmu_pathway <- pathview(gene.data=debasal_genelist, pathway.id=kk3@result$ID[1], species = kegg_organism)
+
+
+
+```
+
+These will prodce these files in your working directory:
+
+mmu05171.xml
+mmu05171.pathview.png
+mmu05171.png
+
+
+![Figure of output produced](fig/mmu05171.pathview.png){alt='Image of pathway'}
+
+
+
+
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Pathways are fun!
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
