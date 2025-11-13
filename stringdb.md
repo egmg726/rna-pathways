@@ -18,7 +18,6 @@ exercises: 2
 
 
 
-*Note: timeouts occurring and not working properly*
 
 ## Interaction networks with `StringDB`
 
@@ -90,22 +89,47 @@ head(enrichment)
 6 1.50e-06 8.80e-04 Intracellular non-membrane-bounded organelle
 ```
 
-``` r
-# Optional: visualize one cluster (example: cluster 1)
-cluster1 <- clusters[[1]]
-```
+There are many available ways of exploring your data using the STRING database that can't be covered in one tutorial but you can learn more by reading the [vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/STRINGdb/inst/doc/STRINGdb.pdf) and inspect available functions within the `STRINGdb` package by running:
 
-``` error
-Error: object 'clusters' not found
-```
 
 ``` r
-string_db$plot_network(cluster1)
+STRINGdb$methods()
 ```
 
-``` error
-Error: object 'cluster1' not found
+``` output
+ [1] ".objectPackage"                      ".objectParent"                      
+ [3] "add_diff_exp_color"                  "add_proteins_description"           
+ [5] "benchmark_ppi"                       "benchmark_ppi_pathway_view"         
+ [7] "callSuper"                           "copy"                               
+ [9] "enrichment_heatmap"                  "export"                             
+[11] "field"                               "get_aliases"                        
+[13] "get_annotations"                     "get_bioc_graph"                     
+[15] "get_clusters"                        "get_enrichment"                     
+[17] "get_graph"                           "get_homologs"                       
+[19] "get_homologs_besthits"               "get_homology_graph"                 
+[21] "get_interactions"                    "get_link"                           
+[23] "get_neighbors"                       "get_paralogs"                       
+[25] "get_pathways_benchmarking_blackList" "get_png"                            
+[27] "get_ppi_enrichment"                  "get_ppi_enrichment_full"            
+[29] "get_proteins"                        "get_pubmed"                         
+[31] "get_pubmed_interaction"              "get_subnetwork"                     
+[33] "get_summary"                         "get_term_proteins"                  
+[35] "getClass"                            "getRefClass"                        
+[37] "import"                              "initFields"                         
+[39] "initialize"                          "load"                               
+[41] "load_all"                            "map"                                
+[43] "mp"                                  "plot_network"                       
+[45] "plot_ppi_enrichment"                 "post_payload"                       
+[47] "ppi_enrichment"                      "remove_homologous_interactions"     
+[49] "set_background"                      "show"                               
+[51] "show#envRefClass"                    "trace"                              
+[53] "untrace"                             "usingMethods"                       
 ```
+
+Read more about STRING:
+
+- Szklarczyk, Damian et al. “The STRING database in 2025: protein networks with directionality of regulation.” Nucleic acids research vol. 53,D1 (2025): D730-D737. doi:10.1093/nar/gkae1113
+
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
