@@ -13,6 +13,6 @@
 "episodes/conclusion.Rmd" "84054dab214d5cefac69569acd35d0b8" "site/built/conclusion.md" "2025-11-13"
 "instructors/instructor-notes.md" "5cf113fd22defb29d17b64597f3c9bc0" "site/built/instructor-notes.md" "2025-11-13"
 "learners/reference.md" "527a12e217602daae51c5fd9ef8958df" "site/built/reference.md" "2025-11-13"
-"learners/setup.md" "06eee16d0ba675ec5748c610652dde82" "site/built/setup.md" "2025-11-13"
+"learners/setup.md" "5364cf829ecd7c10a36af6f414193d78" "site/built/setup.md" "2025-11-13"
 "profiles/learner-profiles.md" "5fe5bf7537072422b91ed393ada03f9a" "site/built/learner-profiles.md" "2025-11-13"
 "renv/profiles/lesson-requirements/renv.lock" "f74503281a93d0f4910f6954b3d90e28" "site/built/renv.lock" "2025-11-13"
