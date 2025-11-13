@@ -436,10 +436,13 @@ computer.</p>
 <div class="callout-content">
 <p>If you not have R and RStudio already installed, please download them
 here:</p>
-<p><a href="https://cran.ms.unimelb.edu.au/" class="external-link">Download and install the
-latest version of R using the UniMelb mirror</a>. <a href="https://posit.co/download/rstudio-desktop/#download" class="external-link">Download and
-install RStudio</a>.</p>
-</div>
+<ul><li>
+<a href="https://cran.ms.unimelb.edu.au/" class="external-link">Download and install the
+latest version of R using the UniMelb mirror</a>.</li>
+<li>
+<a href="https://posit.co/download/rstudio-desktop/#download" class="external-link">Download and
+install RStudio</a>.</li>
+</ul></div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="install-libraries">Install Libraries<a class="anchor" aria-label="anchor" href="#install-libraries"></a></h2>
@@ -448,18 +451,15 @@ install RStudio</a>.</p>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span></span>
 <span><span class="fu">install.packages</span><span class="op">(</span><span class="st">'ggplot2'</span><span class="op">)</span></span>
 <span></span>
-<span></span>
-<span>   <span class="fu">install.packages</span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span>   <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"edgeR"</span>, <span class="st">"goseq"</span>, <span class="st">"fgsea"</span>, </span>
+<span><span class="fu">install.packages</span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"edgeR"</span>, <span class="st">"goseq"</span>, <span class="st">"fgsea"</span>, </span>
 <span>   <span class="st">"EGSEA"</span>,<span class="st">"clusterProfiler"</span>,<span class="st">'org.Mm.eg.db'</span>,<span class="st">'pathview'</span>,<span class="st">'edgeR'</span>,<span class="st">'STRINGdb'</span><span class="op">)</span><span class="op">)</span></span>
 <span>   </span>
-<span>   </span>
-<span>   <span class="co"># If RegEnrich is not loading try installing the following:</span></span>
-<span>   <span class="co">#BiocManager::install("impute") # dependency for regenrich</span></span>
-<span>  <span class="co">#BiocManager::install("preprocessCore") # also dependency</span></span>
+<span><span class="co">## If RegEnrich is not loading try installing the following:</span></span>
+<span><span class="co">### BiocManager::install("impute") # dependency for regenrich</span></span>
+<span><span class="co">### BiocManager::install("preprocessCore") # also dependency</span></span>
 <span>   </span></code></pre>
 </div>
 <!--
@@ -515,8 +515,8 @@ any links that you are not going to use.
   "url": "https://template-source.github.io/lesson-example/instructor/index.html",
   "identifier": "https://template-source.github.io/lesson-example/instructor/index.html",
   "dateCreated": "2025-10-09",
-  "dateModified": "2025-11-11",
-  "datePublished": "2025-11-11"
+  "dateModified": "2025-11-13",
+  "datePublished": "2025-11-13"
 }
 
   </script><script>
