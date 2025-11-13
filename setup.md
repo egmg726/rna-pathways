@@ -24,18 +24,24 @@ This lesson assumes you have R and RStudio installed on your computer.
 
 ## Software Setup
 
-::::::::::::::::::::::::::::::::::::::: discussion
+:::: checklist
 
-If you not have R and RStudio already installed, please download them here:
+## REQUIRED SOFTWARE
 
-- [Download and install the latest version of R using the UniMelb mirror](https://cran.ms.unimelb.edu.au/).
-- [Download and install RStudio](https://posit.co/download/rstudio-desktop/#download).
+Attendees are required to bring their own laptop computers. **Please ensure you have installed:**
 
+- [Chrome](https://www.google.com/chrome/) or [FireFox](https://www.mozilla.org/en-US/)
+- [R](https://cran.ms.unimelb.edu.au/) (Download and install the latest version of R using the UniMelb mirror)
+- [RStudio](https://posit.co/download/rstudio-desktop/#download)
+- R packages required for this workshop (see below)
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::
+::::
+
 
 
 ## Install Libraries
+
+Please copy the following code and run prior to starting the training material:
 
 ```r
 
