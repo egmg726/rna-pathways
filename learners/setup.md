@@ -9,14 +9,14 @@ the data sets the Learner needs to have installed.
 
 Data is from Zenodo
 Link to paper here with description
-
+renee testing 123 
 
 
 :::: prereq
 
 Some knowledge of R and RNA-seq analysis is assumed.
 
-This lesson assumes you have R and RStudio installed on your computer.
+This lesson assumes you have R and RStudio installed on your computer. hehe. 
 
 
 ::::
