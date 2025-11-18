@@ -6,21 +6,33 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- What is clusterProfiler?
+- What are the different types of GO terms (BP, MF, CC)?
+- How do we perform ORA using `enrichGO()` function?
+-	How can we run GSEA-style functional class scoring with `gseGO()` function?
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Apply GO-based enrichment methods using `clusterProfiler`
+- Perform both ORA and GSEA using the GO terms database
+- Build confidence in navigating GO resources and interpreting enriched terms 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+## Introduction
+
+The Gene Ontology (GO) project is a major bioinformatics initiative that standardises how we describe gene functions across species, organising them into three categories: Biological Process, Molecular Function and Cellular Component. `clusterProfiler` is an R package that allows us to test whether these GO terms are associated with our RNA-seq results and gain insight into the pathways or functions represented in our data. This section demonstrates how to perform both **over-representation analysis (ORA)** and **functional class scoring (FCS)** with GO database, depending on whether you are working with a list of significant genes or full ranked expression data. 
+
+## Over-Representation Analysis (ORA)
+
+**ORA** tests whether a list of significant genes are linked to specific GO terms. The input is a vector of gene IDs (or list of genes) that passes your differential expression cut-off. ORA can be run separately for downregulated and upregulated genes to reveal which GO terms are enriched in each direction.
+
+We first subset the `debasal` dataset to extract genes with adjusted p-value below 0.01 and store this set of significant genes in an object called `genes`. We then run enrichGO function using this gene list, specifying the organism database `org.Mm.eg.db`, the identifier type `ENTREZID` and the GO category of interest `CC` (for cellular component). The function is configured with standard p-value and q-value, using Benjamini-Hochberg correction. We use the function `head()` to check the first few lines of output. 
 
 
 
-## Gene Ontology testing with `clusterProfiler`
 
 
 
@@ -28,14 +40,13 @@ exercises: 2
 debasal$Status <- debasal$adj.P.Val < 0.01
 gene <- debasal$ENTREZID[debasal$Status]
 
-
-ego <- enrichGO(gene          = gene,
-                OrgDb         = org.Mm.eg.db,
-                keyType       = 'ENTREZID',
-                ont           = "CC",
+ego <- enrichGO(gene = gene,
+                OrgDb = org.Mm.eg.db,
+                keyType = 'ENTREZID',
+                ont = "CC",
                 pAdjustMethod = "BH",
-                pvalueCutoff  = 0.01,
-                qvalueCutoff  = 0.05,
+                pvalueCutoff = 0.01,
+                qvalueCutoff = 0.05,
                 readable = TRUE)
 head(ego)
 ```
@@ -78,7 +89,7 @@ GO:0005819   119
 GO:0022627    28
 ```
 
-
+We can then use `dotplot()` function to visualise the results in the form of a dot plot. From the plot below, we can see that GO term cellular component spindle, membrane microdomain and ribosome are top enriched terms.
 
 
 ``` r
@@ -87,22 +98,22 @@ dotplot(ego)
 
 <img src="fig/clusterprofiler-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-
-
 ::::: challenge
 
-Repeat this analysis using `deluminal` data. Are the enriched pathways similar?
-
+Challenge! Can you identify enriched GO term biological process in `deluminal` dataset? Are the enriched pathways similar?
 
 :::::
+## Gene Set Enrichment Analysis (GSEA)
 
+We can also perform **GSEA** using GO database. GSEA is a type of functional class scoring method that evaluates whether genes belonging to a GO term tend to appear at the top or bottom of a ranked gene list, rather than relying on a cut-off (i.e. adj.P.Val < 0.01). The input is a continuous ranking metric (e.g. log2FC) for all genes. This allows the detection of subtle but coordinated shifts in GO terms for both downregulated and upregulated pathways. 
+
+We begin by creating a ranked gene list for GSEA by extracting the logFC values from `debasal` dataset and its corresponding `ENTREZID`. We then sort this vector in a decreasing order so that the upregulated genes appear at the top of the list and the downregulated genes at the bottom. Using this ranked gene list, we run `gseGO()` to perform GSEA on GO terms `CC`, by specifying the organism database, gene ID type, gene set limits and p-value cut-off for enrichment. 
 
 
 ``` r
 debasal_genelist <- debasal$logFC
 names(debasal_genelist) <- debasal$ENTREZID
 debasal_genelist <- sort(debasal_genelist, decreasing = TRUE)
-
 
 ego3 <- gseGO(gene          = debasal_genelist,
                 OrgDb         = org.Mm.eg.db,
@@ -112,26 +123,6 @@ ego3 <- gseGO(gene          = debasal_genelist,
               maxGSSize    = 500,
               pvalueCutoff = 0.05,
               verbose      = FALSE)
-```
-
-``` warning
-Warning in preparePathwaysAndStats(pathways, stats, minSize, maxSize, gseaParam, : There are ties in the preranked stats (0.98% of the list).
-The order of those tied genes will be arbitrary, which may produce unexpected results.
-```
-
-``` warning
-Warning in fgseaMultilevel(pathways = pathways, stats = stats, minSize =
-minSize, : For some of the pathways the P-values were likely overestimated. For
-such pathways log2err is set to NA.
-```
-
-``` warning
-Warning in fgseaMultilevel(pathways = pathways, stats = stats, minSize =
-minSize, : For some pathways, in reality P-values are less than 1e-10. You can
-set the `eps` argument to zero for better estimation.
-```
-
-``` r
 head(ego3)
 ```
 
@@ -139,91 +130,54 @@ head(ego3)
                    ID                              Description setSize
 GO:0030684 GO:0030684                              preribosome     103
 GO:0022626 GO:0022626                       cytosolic ribosome     108
-GO:0000779 GO:0000779 condensed chromosome, centromeric region     175
 GO:0000776 GO:0000776                              kinetochore     164
+GO:0000779 GO:0000779 condensed chromosome, centromeric region     175
 GO:0000775 GO:0000775           chromosome, centromeric region     240
 GO:0044391 GO:0044391                        ribosomal subunit     173
            enrichmentScore      NES       pvalue     p.adjust       qvalue rank
-GO:0030684       0.6638177 2.430533 1.000000e-10 3.300000e-09 2.210526e-09 3377
-GO:0022626       0.6468668 2.382594 1.000000e-10 3.300000e-09 2.210526e-09 4038
-GO:0000779       0.5655402 2.192170 1.000000e-10 3.300000e-09 2.210526e-09 1254
-GO:0000776       0.5705673 2.190326 1.000000e-10 3.300000e-09 2.210526e-09 1254
-GO:0000775       0.5303003 2.092718 1.000000e-10 3.300000e-09 2.210526e-09 1417
-GO:0044391       0.5545608 2.146403 1.468068e-10 4.037186e-09 2.704335e-09 4724
+GO:0030684       0.6638177 2.368948 1.000000e-10 3.300000e-09 2.252632e-09 3377
+GO:0022626       0.6468668 2.323870 1.000000e-10 3.300000e-09 2.252632e-09 4038
+GO:0000776       0.5705673 2.137362 1.000000e-10 3.300000e-09 2.252632e-09 1254
+GO:0000779       0.5655402 2.127037 1.000000e-10 3.300000e-09 2.252632e-09 1254
+GO:0000775       0.5303003 2.063293 1.000000e-10 3.300000e-09 2.252632e-09 1417
+GO:0044391       0.5545608 2.083040 2.463792e-10 6.775428e-09 4.625013e-09 4724
                              leading_edge
 GO:0030684 tags=64%, list=21%, signal=51%
 GO:0022626 tags=76%, list=26%, signal=57%
-GO:0000779  tags=24%, list=8%, signal=22%
 GO:0000776  tags=24%, list=8%, signal=23%
+GO:0000779  tags=24%, list=8%, signal=22%
 GO:0000775  tags=22%, list=9%, signal=20%
 GO:0044391 tags=62%, list=30%, signal=44%
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       core_enrichment
 GO:0030684                                                                                                                                                                                                                                                                 72515/59028/14113/235036/67223/72462/215193/59014/67973/67619/98956/27966/217995/56095/57741/67222/69902/66538/67134/213773/21771/105372/66164/53414/67920/78294/71340/208144/57750/107071/20085/110816/57315/52705/230082/20055/20115/20116/217109/20103/20088/64934/66249/68052/66254/100608/54127/20091/67045/20042/73674/353258/20068/76846/72554/267019/20102/20044/27207/69072/195434/225348/14791/57294/66475/27993
 GO:0022626                                                                                                                                                             16785/56040/269261/22224/20084/19982/68436/22186/78294/67186/67097/20085/67671/20055/19951/11837/100503670/20115/27367/20116/54217/27370/76808/20103/270106/268449/20088/19896/67025/68052/20090/75617/24015/20054/27050/54127/26961/67115/67891/67945/114641/22121/19946/20091/19899/20042/66489/100502825/67427/75624/213753/66480/66481/65019/19921/20068/19988/19933/76846/267019/20102/20044/27207/19981/19942/14852/19941/57294/66475/19944/225363/27176/57808/16898/19934/110954/68193/11815/67281/207214/105083/319195
-GO:0000779                                                                                                                                                                                                                                                                                                                                                                                                                       20877/12235/66468/66977/54392/66570/108000/67629/12236/76464/208628/26886/12615/268697/18817/102920/54141/67052/18005/60411/107995/72415/68549/70385/22137/11799/73804/51944/72155/229841/381318/71876/68014/67177/56150/69928/66934/66442/67037/19387/101994/236930
 GO:0000776                                                                                                                                                                                                                                                                                                                                                                                                                                   20877/12235/66468/66977/66570/108000/67629/12236/76464/208628/26886/268697/18817/102920/54141/67052/18005/60411/107995/72415/68549/70385/22137/11799/73804/51944/72155/229841/381318/71876/68014/67177/56150/69928/66934/66442/67037/19387/101994/236930
+GO:0000779                                                                                                                                                                                                                                                                                                                                                                                                                       20877/12235/66468/66977/54392/66570/108000/67629/12236/76464/208628/26886/12615/268697/18817/102920/54141/67052/18005/60411/107995/72415/68549/70385/22137/11799/73804/51944/72155/229841/381318/71876/68014/67177/56150/69928/66934/66442/67037/19387/101994/236930
 GO:0000775                                                                                                                                                                                                                                                                                                                                                20877/12235/66468/66977/54392/66570/108000/52276/67629/72107/12236/70645/76464/208628/26886/12615/71988/268697/18817/102920/54141/67052/18005/60411/217653/107995/72415/68549/70385/22137/11799/73804/51944/21973/72155/229841/381318/217578/71876/68014/67177/56150/17345/69928/66934/66442/67037/19387/101994/236930/319160/218973/219114
 GO:0044391 16785/56040/269261/20084/56282/19982/66973/68436/22186/78294/67186/67097/20085/67671/20055/18148/19951/11837/100503670/20115/14694/68836/27367/20116/54217/27370/76808/20103/270106/268449/20088/19896/67025/68052/20090/75617/69163/20054/27050/54127/26961/67115/67891/67945/114641/22121/19946/20091/19899/20042/66489/59054/100502825/67427/60441/66480/66481/65019/19921/27397/20068/118451/19988/19933/76846/267019/69956/79044/20102/20044/27207/78523/19981/19942/66230/19941/57294/66475/19944/94063/27176/57808/16898/102060/66258/19934/110954/28028/68193/75398/67281/207214/319195/50529/26451/66121/14109/19989/20104/64657/64655/66407/20005/94065/216767/67840/67308/19943
 ```
-
 
 ``` r
 dotplot(ego3)
 ```
 
+<img src="fig/clusterprofiler-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+
+We can also use the `gseaplot()` function to visualise GSEA result for a specific gene set. In this example, we select the top-ranked enriched GO term (geneSetID = 1). The result-ing plot displays how genes contributing to the enrichment of this GO term are distributed in the ranked gene list. 
+
+
+``` r
+gseaplot(ego3, by = "all", title = ego3$Description[1], geneSetID = 1)
+```
+
 <img src="fig/clusterprofiler-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
-
-
-## What is GSEA?
-
-*Brief explanation/refresh here if not explained in intro*
-
-## Gene Set Enrichment Analysis (GSEA)
-
-
-``` r
-gseaplot(ego3, by = "all",title = ego3$Description[1],geneSetID = 1)
-```
-
-``` warning
-Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-ℹ The deprecated feature was likely used in the enrichplot package.
-  Please report the issue at
-  <https://github.com/GuangchuangYu/enrichplot/issues>.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.
-```
-
-<img src="fig/clusterprofiler-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
-
-``` r
-#title = gse$Description[1], geneSetID = 1)
-```
-
-Plot of number of articles using the term:
-
-
-``` r
-# From https://learn.gencore.bio.nyu.edu/rna-seq-analysis/gene-set-enrichment-analysis/
-
-terms <- ego3$Description[1:3]
-pmcplot(terms, 2020:2025, proportion=FALSE)
-```
-
-``` error
-Error in `pmcplot()`:
-! The package "europepmc" is required for `pmcplot()`.
-```
-
-
-
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- clusterProfiler makes cool plots!
+- GO terms are divided into Biological Process (BP), Molecular Function (MF) and Cellular Component (CC), which can be analysed separately or together depending on the biological question.
+- The `enrichGO()` and `gseGO()` functions in `clusterProfiler` allow users to perform **ORA** and **GSEA** using the GO database directly.
+- GO testing results highlight gene sets or pathways that are overrepresented in your dataset, allowing interpretation of downregulated or upregulated genes.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
