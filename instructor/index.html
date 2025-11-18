@@ -337,7 +337,9 @@ any links that you are not going to use.
  1. <a href="introduction.html">Introduction</a>
 </td>
 <td>
-What data are we using?
+What are the main types of functional enrichment analysis approaches,
+and how do they differ?<br>When should you choose one enrichment
+strategy over another for RNA-seq data?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>00h 12m
@@ -347,7 +349,9 @@ What data are we using?
 <code>clusterProfiler</code></a>
 </td>
 <td>
-What is clusterProfiler?
+What are the different types of GO terms (BP, MF, CC)?<br>How do we
+perform ORA using <code>enrichGO()</code> function?<br>How can we run
+GSEA-style functional class scoring with <code>gseGO()</code> function?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>00h 24m
@@ -409,10 +413,19 @@ any links that you are not going to use.
  --></tbody></table><p>
       The actual schedule may vary slightly depending on the topics and exercises chosen by the instructor.
       </p>
-      </section><section id="setup"><p>FIXME: Setup instructions live in this document. Please specify the
-tools and the data sets the Learner needs to have installed.</p>
-<section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
-<hr class="half-width"><p>Data is from Zenodo Link to paper here with description</p>
+      </section><section id="setup"><p>This workshop provides a practical introduction to functional
+enrichment analysis following differential expression in RNA-seq
+studies. We will compare two major enrichment strategies,
+<strong>over-representation analysis (ORA)</strong> and
+<strong>functional class scoring (FCS)</strong>, and discuss when each
+approach is most appropriate. Participants will learn how to implement
+these methods in R using packages including
+<code>clusterProfiler</code>, <code>fgsea</code>,
+<code>Reg-Enrich</code> and <code>STRINGdb</code>, drawing on pathway
+and gene-set resources such as <strong>Gene Ontology</strong>,
+<strong>KEGG Pathway Database</strong> and <strong>Molecular Signatures
+Database</strong>. By the end of this workshop, you will have a clear
+understanding of how to interpret enriched pathways in RNA-seq data.</p>
 <div id="prereq1" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
@@ -420,20 +433,72 @@ tools and the data sets the Learner needs to have installed.</p>
 <span class="callout-header">Prerequisite</span>
 <div class="callout-inner">
 <div class="callout-content">
-<p>Some knowledge of R and RNA-seq analysis is assumed.</p>
-<p>This lesson assumes you have R and RStudio installed on your
-computer.</p>
+<p>• Installed R and RStudio</p>
+<p>• Have basic R knowledge</p>
+<p>• Completed ‘Intro to R for Biologists’ and ‘RNA-seq: From reads to
+counts to genes’, or equivalent</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
-<hr class="half-width"><div id="required-software" class="callout checklist">
+<section><h2 class="section-heading" id="r-packages-datasets">R Packages &amp; Datasets<a class="anchor" aria-label="anchor" href="#r-packages-datasets"></a></h2>
+<hr class="half-width"><p>In this workshop, we will learn how to use
+<code>clusterProfiler</code>, <code>fgsea</code>, <code>RegEnrich</code>
+and <code>STRINGdb</code> tools, along with related dependencies
+<code>org.Mm.eg.db</code>, <code>impute</code> and
+<code>preprocessCore</code>. Please install the following packages:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#Run this code to install BiocManager if you don't have it</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw">require</span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="fu">install.packages</span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Use BiocManager to install relevant packages</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"clusterProfiler"</span>, <span class="st">"fgsea"</span>, <span class="st">"RegEnrich"</span>,<span class="st">"STRINGdb"</span>, <span class="st">"org.Mm.eg.db"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+</div>
+<p>We will use RNA-seq data from Fu et al., 2015 (<a href="https://www.ncbi.nlm.nih.gov/pubmed/25730472" class="external-link uri">https://www.ncbi.nlm.nih.gov/pubmed/25730472</a>). Please
+download the following datasets from Zenodo:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#To download files from Zenodo</span></span>
+<span></span>
+<span><span class="va">dataurl</span> <span class="op">&lt;-</span> <span class="st">"https://zenodo.org/record/2596382/files/"</span></span>
+<span></span>
+<span><span class="va">debasal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_basalpregnant-basallactate"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">deluminal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_luminalpregnant-luminallactate"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">seqdata</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"seqdata"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="fu">load</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"mouse_hallmark_sets"</span><span class="op">)</span><span class="op">)</span> <span class="co">#loads as Mm.H</span></span>
+<span><span class="va">factordata</span> <span class="op">&lt;-</span> <span class="fu">read.table</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"factordata"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">filteredcounts</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_filtered_counts"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre>
+</div>
+<p>We have also provided these datasets within the GitHub repo. To
+access them:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co">#To retrieve files from GitHub</span></span>
+<span></span>
+<span><span class="va">debasal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/limma-voom_basalpregnant-basallactate"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">deluminal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/limma-voom_luminalpregnant-luminallactate"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">seqdata</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/seqdata"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="fu">load</span><span class="op">(</span><span class="st">"data/mouse_hallmark_sets.RData"</span><span class="op">)</span> <span class="co">#loads as Mm.H</span></span>
+<span><span class="va">factordata</span> <span class="op">&lt;-</span> <span class="fu">read.table</span><span class="op">(</span><span class="st">"data/factordata"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">filteredcounts</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/limma-voom_filtered_counts"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
+<hr class="half-width"><div id="checklist1" class="callout checklist">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check-square"></i>
 </div>
 <span class="callout-header">Checklist</span>
-<div id="required-software" class="callout-inner">
-<h3 class="callout-title">REQUIRED SOFTWARE</h3>
+<div class="callout-inner">
 <div class="callout-content">
 <p>Attendees are required to bring their own laptop computers.
 <strong>Please ensure you have installed:</strong></p>
@@ -444,28 +509,10 @@ computer.</p>
 <a href="https://cran.ms.unimelb.edu.au/" class="external-link">R</a> (Download and
 install the latest version of R using the UniMelb mirror)</li>
 <li><a href="https://posit.co/download/rstudio-desktop/#download" class="external-link">RStudio</a></li>
-<li>R packages required for this workshop (see below)</li>
+<li>R packages required for this workshop (see above)</li>
+<li>Datasets required for this workshop (see above)</li>
 </ul></div>
 </div>
-</div>
-</section><section><h2 class="section-heading" id="install-libraries">Install Libraries<a class="anchor" aria-label="anchor" href="#install-libraries"></a></h2>
-<hr class="half-width"><p>Please copy the following code and run prior to starting the training
-material:</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu">install.packages</span><span class="op">(</span><span class="st">'ggplot2'</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">install.packages</span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"edgeR"</span>, <span class="st">"goseq"</span>, <span class="st">"fgsea"</span>, </span>
-<span>   <span class="st">"EGSEA"</span>,<span class="st">"clusterProfiler"</span>,<span class="st">'org.Mm.eg.db'</span>,<span class="st">'pathview'</span>,<span class="st">'edgeR'</span>,<span class="st">'STRINGdb'</span><span class="op">)</span><span class="op">)</span></span>
-<span>   </span>
-<span><span class="co">## If RegEnrich is not loading try installing the following:</span></span>
-<span><span class="co">### BiocManager::install("impute") # dependency for regenrich</span></span>
-<span><span class="co">### BiocManager::install("preprocessCore") # also dependency</span></span>
-<span>   </span></code></pre>
 </div>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
