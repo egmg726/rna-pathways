@@ -66,12 +66,12 @@ contact: 'bioinformatics-training@unimelb.edu.au'
 # Order of episodes in your lesson
 episodes:
 - introduction.Rmd
-- clusterprofiler.Rmd
-- section1.Rmd
-- fgsea.Rmd
-- regenrich.Rmd
-- stringdb.Rmd
-- conclusion.Rmd
+#- clusterprofiler.Rmd
+#- section1.Rmd
+#- fgsea.Rmd
+#- regenrich.Rmd
+#- stringdb.Rmd
+#- conclusion.Rmd
 
 
 # Information for Learners
