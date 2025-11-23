@@ -6,13 +6,16 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do we analyze differentially expressed genes (DEGs) using pathway analysis?
+- How can we perform pathway analysis using KEGG?
+- What insights can KEGG enrichment provide about differentially expressed genes
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Learn how to interpret DEGs using gene set testing in R.
+- Learn how to run KEGG over-representation and GSEA-style analysis in R.
+- Understand how to interpret pathway-level results.
+- Generate and visualise KEGG pathway figures.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -42,7 +45,7 @@ load("data/mouse_hallmark_sets.RData")
 factordata <- read.table("data/factordata", header = TRUE, sep = "\t")
 filteredcounts <- read.csv("data/limma-voom_filtered_counts", header = TRUE, sep = "\t")
 
-
+# Prepare a named gene list for GSEA KEGG enrichment
 debasal_genelist <- debasal$logFC
 names(debasal_genelist) <- debasal$ENTREZID
 debasal_genelist <- sort(debasal_genelist, decreasing = TRUE)
@@ -57,7 +60,8 @@ debasal_genelist <- sort(debasal_genelist, decreasing = TRUE)
 
 ## KEGG analysis
 
-Check to make sure we're using the right term: (can explain more about how to find the code as well)
+Before running enrichment, we need to confirm the correct KEGG organism code for mouse (`mmu`).
+You can verify by searching:
 
 ```{r}
 
@@ -67,7 +71,7 @@ search_kegg_organism(kegg_organism, by='kegg_code')
 
 ```
 
-We'll use the enrichKEGG function to look the organism:
+## Over-representation analysis with `enrichKEGG`
 
 ```{r}
 
@@ -80,6 +84,8 @@ head(kk)
 
 ```
 
+## GSEA-style KEGG enrichment with `gseKEGG`
+This method uses the entire ranked gene list rather than an arbitrary cutoff.
 ```{r}
 
 
@@ -95,14 +101,19 @@ kk2 <- gseKEGG(geneList     = debasal_genelist,
 
 
 ```
-
+## Visualising enriched pathways
+### Dotplot
+Before we look at individual pathways in detail, we can visualise the overall enrichment results.  
+This dotplot summarises which KEGG pathways are enriched, how many genes contribute to each pathway, and how significant each one is.
 ```{r}
 
 dotplot(kk2, showCategory = 10, title = "Enriched Pathways" , split=".sign") + facet_grid(.~.sign)
 
 
 ```
-
+### Similarity-based network plots
+Next, we can explore how the enriched pathways relate to one another.  
+The enrichment map groups pathways that share many genes, helping us see broader biological themes rather than isolated pathways.
 ```{r}
 
 kk3 <- pairwise_termsim(kk2)
@@ -110,6 +121,8 @@ kk3 <- pairwise_termsim(kk2)
 emapplot(kk3)
 
 ```
+To understand which genes drive these pathways, we can use a `cnetplot`.  
+This visualisation links genes to the pathways they belong to and highlights “hub genes” that appear in multiple pathways.
 
 ```{r}
 
@@ -117,6 +130,9 @@ cnetplot(kk3, categorySize="pvalue")
 
 
 ```
+### Ridge plot
+We can also inspect the distribution of enrichment scores across pathways.  
+The ridgeplot shows how strongly and broadly each pathway is enriched across the ranked gene list.
 
 ```{r}
 
@@ -140,6 +156,8 @@ kk3@result$ID[1]
 
 ```
 
+Finally, we can visualise gene expression changes directly onto a KEGG pathway diagram.  
+`pathview` highlights which components of the pathway are up- or down-regulated in your analysis.
 
 ```{r, eval=FALSE}
 
@@ -152,7 +170,7 @@ mmu_pathway <- pathview(gene.data=debasal_genelist, pathway.id=kk3@result$ID[1],
 
 ```
 
-These will prodce these files in your working directory:
+These will produce these files in your working directory:
 
 mmu05171.xml
 mmu05171.pathview.png
@@ -167,7 +185,11 @@ mmu05171.png
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Pathways are fun!
+- KEGG pathway analysis helps link DEGs to functional biological pathways.
+
+- Both ORA (`enrichKEGG`) and GSEA-style (`gseKEGG`) methods provide complementary insights.
+
+- `pathview` enables visual interpretation of pathway-level expression changes.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
