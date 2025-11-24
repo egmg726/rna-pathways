@@ -68,10 +68,10 @@ episodes:
 - introduction.Rmd
 - clusterprofiler.Rmd
 - section1.Rmd
-#- fgsea.Rmd
-#- regenrich.Rmd
-#- stringdb.Rmd
-#- conclusion.Rmd
+- fgsea.Rmd
+- regenrich.Rmd
+- stringdb.Rmd
+- conclusion.Rmd
 
 
 # Information for Learners

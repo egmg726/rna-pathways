@@ -21,6 +21,44 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+
+```{r, message=FALSE,warning=FALSE,echo=FALSE}
+
+#Libraries needed
+library(edgeR)
+library(goseq)
+library(fgsea)
+library(EGSEA)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ggplot2)
+library(enrichplot)
+library(pathview)
+library(edgeR)
+library(impute)
+library(preprocessCore)
+library(RegEnrich)
+library(STRINGdb)
+
+#Load differential expression results
+
+debasal <- read.csv("data/limma-voom_basalpregnant-basallactate", header = TRUE, sep = "\t")
+deluminal <- read.csv("data/limma-voom_luminalpregnant-luminallactate", header = TRUE, sep = "\t")
+seqdata <- read.csv("data/seqdata", header = TRUE, sep = "\t")
+
+#Load Hallmark gene sets
+load("data/mouse_hallmark_sets.RData")
+# loads as Mm.H, each element = pathway
+
+#Load metadata for samples
+factordata <- read.table("data/factordata", header = TRUE, sep = "\t")
+
+#Load filtered counts matrix 
+filteredcounts <- read.csv("data/limma-voom_filtered_counts", header = TRUE, sep = "\t")
+
+
+```
+
 ## Analysis with `RegEnrich`
 `RegEnrich` is used to identify potential *key regulators* (e.g. transcription factors) that may be driving the gene expression changes observed in your RNA-seq experiment.
 
@@ -64,7 +102,7 @@ The code below shows how to:
 3. Create a RegenrichSet object.
 4. Run the main RegEnrich pipeline and inspect the results.
 
-```{r, eval=FALSE}
+```{r}
 # Load mouse transcription factors (must include a "GeneID" column)
 mouseTFs <- read.csv('data/BrowseTF  TcoF-DB.csv')
 
