@@ -449,11 +449,11 @@ understanding of how to interpret enriched pathways in RNA-seq data.</p>
 <span class="callout-header">Prerequisite</span>
 <div class="callout-inner">
 <div class="callout-content">
-<p>• Installed R and RStudio</p>
-<p>• Have basic R knowledge</p>
-<p>• Completed ‘Intro to R for Biologists’ and ‘RNA-seq: From reads to
-counts to genes’, or equivalent</p>
-</div>
+<ul><li><p>Installed R and RStudio</p></li>
+<li><p>Have basic R knowledge</p></li>
+<li><p>Completed ‘Intro to R for Biologists’ and ‘RNA-seq: From reads to
+counts to genes’, or equivalent</p></li>
+</ul></div>
 </div>
 </div>
 <section><h2 class="section-heading" id="r-packages-datasets">R Packages &amp; Datasets<a class="anchor" aria-label="anchor" href="#r-packages-datasets"></a></h2>
@@ -461,7 +461,8 @@ counts to genes’, or equivalent</p>
 <code>clusterProfiler</code>, <code>fgsea</code>, <code>RegEnrich</code>
 and <code>STRINGdb</code> tools, along with related dependencies
 <code>org.Mm.eg.db</code>, <code>impute</code> and
-<code>preprocessCore</code>. Please install the following packages:</p>
+<code>preprocessCore</code>.</p>
+<p>Please install the following packages:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -474,27 +475,17 @@ and <code>STRINGdb</code> tools, along with related dependencies
 <span><span class="co">#Use BiocManager to install relevant packages</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"clusterProfiler"</span>, <span class="st">"fgsea"</span>, <span class="st">"RegEnrich"</span>,<span class="st">"STRINGdb"</span>, <span class="st">"org.Mm.eg.db"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
-<p>We will use RNA-seq data from Fu et al., 2015 (<a href="https://www.ncbi.nlm.nih.gov/pubmed/25730472" class="external-link uri">https://www.ncbi.nlm.nih.gov/pubmed/25730472</a>). Please
-download the following datasets from Zenodo:</p>
-<div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co">#To download files from Zenodo</span></span>
-<span></span>
-<span><span class="va">dataurl</span> <span class="op">&lt;-</span> <span class="st">"https://zenodo.org/record/2596382/files/"</span></span>
-<span></span>
-<span><span class="va">debasal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_basalpregnant-basallactate"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="va">deluminal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_luminalpregnant-luminallactate"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="va">seqdata</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"seqdata"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="fu">load</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"mouse_hallmark_sets"</span><span class="op">)</span><span class="op">)</span> <span class="co">#loads as Mm.H</span></span>
-<span><span class="va">factordata</span> <span class="op">&lt;-</span> <span class="fu">read.table</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"factordata"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="va">filteredcounts</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_filtered_counts"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre>
-</div>
-<p>We have also provided these datasets within the GitHub repo. To
-access them:</p>
-<div class="codewrapper sourceCode" id="cb3">
+<p>We will use RNA-seq data from Fu et al., 2015 (<a href="https://www.ncbi.nlm.nih.gov/pubmed/25730472" class="external-link uri">https://www.ncbi.nlm.nih.gov/pubmed/25730472</a>).</p>
+<p>We have also provided the data we will be using within the GitHub
+repo. To access them:</p>
+<ul><li><a href="../data/limma-voom_basalpregnant-basallactate">limma-voom_basalpregnant-basallactate</a></li>
+<li><a href="../data/limma-voom_luminalpregnant-luminallactate">limma-voom_luminalpregnant-luminallactate</a></li>
+<li><a href="../data/seqdata">seqdata</a></li>
+<li><a href="../data/mouse_hallmark_sets.RData">mouse_hallmark_sets</a></li>
+<li><a href="../data/factordata">factordata</a></li>
+<li><a href="../data/limma-voom_filtered_counts">filteredcounts</a></li>
+<li><a href="../%C3%9Fdata/BrowseTF%20TcoF-DB.csv">mouseTFs</a></li>
+</ul><div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -507,6 +498,24 @@ access them:</p>
 <span><span class="fu">load</span><span class="op">(</span><span class="st">"data/mouse_hallmark_sets.RData"</span><span class="op">)</span> <span class="co">#loads as Mm.H</span></span>
 <span><span class="va">factordata</span> <span class="op">&lt;-</span> <span class="fu">read.table</span><span class="op">(</span><span class="st">"data/factordata"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
 <span><span class="va">filteredcounts</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/limma-voom_filtered_counts"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre>
+</div>
+<p>You can load some of the data directly from Zenodo into your RStudio
+enviornment with the following code:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># To download files from Zenodo</span></span>
+<span></span>
+<span><span class="va">dataurl</span> <span class="op">&lt;-</span> <span class="st">"https://zenodo.org/record/2596382/files/"</span></span>
+<span></span>
+<span><span class="va">debasal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_basalpregnant-basallactate"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">deluminal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_luminalpregnant-luminallactate"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">seqdata</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"seqdata"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="fu">load</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"mouse_hallmark_sets"</span><span class="op">)</span><span class="op">)</span> <span class="co">#loads as Mm.H</span></span>
+<span><span class="va">factordata</span> <span class="op">&lt;-</span> <span class="fu">read.table</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"factordata"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
+<span><span class="va">filteredcounts</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="fu">paste0</span><span class="op">(</span><span class="va">dataurl</span>,<span class="st">"limma-voom_filtered_counts"</span><span class="op">)</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
 <hr class="half-width"><div id="checklist1" class="callout checklist">

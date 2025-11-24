@@ -245,7 +245,6 @@
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
         <ul><li><a href="#what-is-gsea-in-practice">What is GSEA (in practice)?</a></li>
-<li><a href="#fgsea-setup"><code>fgsea</code> Setup</a></li>
 <li><a href="#gene-set-enrichment-analysis-with-fgsea">Gene Set Enrichment Analysis with <code>fgsea</code></a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -401,12 +400,9 @@ algorithm, allowing thousands of pathways to be tested quickly.</p>
 genes from the ‘debasal’ dataset - Run ‘fgsea()’ using the mouse
 Hallmark gene sets ‘(Mm.H)’. - Explore the top enriched pathways -
 Visualise both multiple pathways and a single pathway in detail</p>
-</section><section><h2 class="section-heading" id="fgsea-setup">
-<code>fgsea</code> Setup<a class="anchor" aria-label="anchor" href="#fgsea-setup"></a></h2>
-<hr class="half-width"><p>Before we begin, load the packages and data needed for GSEA:</p>
 </section><section><h2 class="section-heading" id="gene-set-enrichment-analysis-with-fgsea">Gene Set Enrichment Analysis with <code>fgsea</code>
 <a class="anchor" aria-label="anchor" href="#gene-set-enrichment-analysis-with-fgsea"></a></h2>
-<hr class="half-width"><p>Now, let’s perform Gene Set Enrichment Analysis using the
+<hr class="half-width"><p>Let’s perform Gene Set Enrichment Analysis using the
 <code>fgsea</code> package.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -468,7 +464,7 @@ instead of <code>debasal</code>.</p>
 (<code>Mm.H</code>).<br></li>
 <li>Identify the top 5 enriched pathways.<br></li>
 <li>Are they different from the <code>debasal</code> results? What
-biological differences might explain this? ### Solution</li>
+biological differences might explain this? :::: solution</li>
 </ol><div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -490,6 +486,7 @@ biological differences might explain this? ### Solution</li>
 </div>
 </div>
 </div>
+<p>:::::::::::::::::::::::::::::::::::::::::::::::</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>

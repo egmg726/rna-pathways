@@ -484,27 +484,11 @@ object. 4. Run the main RegEnrich pipeline and inspect the results.</p>
 <span><span class="va">object</span> <span class="op">=</span> <span class="fu">regenrich_diffExpr</span><span class="op">(</span><span class="va">object</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">regenrich_network</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">regenrich_enrich</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">regenrich_rankScore</span><span class="op">(</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="warning" tabindex="0"><code>Warning in class(x) &lt;- tibble_class: Setting class(x) to multiple strings
-("tbl_df", "tbl", ...); result will no longer be an S4 object</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Obtain results (ranked regulators)</span></span>
+<span>  <span class="fu">regenrich_rankScore</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Obtain results (ranked regulators)</span></span>
 <span><span class="va">res</span> <span class="op">=</span> <span class="fu">results_score</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span>
 <span><span class="fu">print</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="warning" tabindex="0"><code>Warning in class(x) &lt;- tibble_class: Setting class(x) to multiple strings
-("tbl_df", "tbl", ...); result will no longer be an S4 object</code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -524,24 +508,12 @@ object. 4. Run the main RegEnrich pipeline and inspect the results.</p>
 10 21833        8.53          41.3 -6.50  1.48
 # ℹ 643 more rows</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Visualise regulator-target expression for selected regulator</span></span>
 <span><span class="fu">plotRegTarExpr</span><span class="op">(</span><span class="va">object</span>, reg <span class="op">=</span> <span class="st">"71371"</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="warning" tabindex="0"><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-ℹ Please use tidy evaluation idioms with `aes()`.
-ℹ See also `vignette("ggplot2-in-packages")` for more information.
-ℹ The deprecated feature was likely used in the RegEnrich package.
-  Please report the issue to the authors.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.</code></pre>
 </div>
 <img src="../fig/regenrich-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" class="figure"><details><summary><strong>Click to expand: Understanding design matrices and
 contrasts</strong>
@@ -573,7 +545,7 @@ on the order of the factor levels in
 <div class="callout-content">
 <p>Look at the factor levels in
 <code>factordata$CellTypeStatus</code>:</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
