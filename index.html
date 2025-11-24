@@ -377,16 +377,40 @@ and <code>STRINGdb</code> tools, along with related dependencies
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co">#Run this code to install BiocManager if you don't have it</span></span>
-<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw">require</span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span>        <span class="fu">install.packages</span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="co">## Install BiocManager if not already installed</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu">requireNamespace</span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">install.packages</span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
 <span></span>
-<span><span class="co">#Use BiocManager to install relevant packages</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="fu">c</span><span class="op">(</span><span class="st">"clusterProfiler"</span>, <span class="st">"fgsea"</span>, <span class="st">"RegEnrich"</span>,<span class="st">"STRINGdb"</span>, <span class="st">"org.Mm.eg.db"</span><span class="op">)</span><span class="op">)</span></span></code></pre>
+<span><span class="co">## List of Bioconductor packages</span></span>
+<span><span class="va">bioc_packages</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span></span>
+<span>    <span class="st">"edgeR"</span>,</span>
+<span>    <span class="st">"goseq"</span>,</span>
+<span>    <span class="st">"fgsea"</span>,</span>
+<span>    <span class="st">"EGSEA"</span>,</span>
+<span>    <span class="st">"clusterProfiler"</span>,</span>
+<span>    <span class="st">"org.Mm.eg.db"</span>,</span>
+<span>    <span class="st">"enrichplot"</span>,</span>
+<span>    <span class="st">"pathview"</span>,</span>
+<span>    <span class="st">"preprocessCore"</span>,</span>
+<span>    <span class="st">"RegEnrich"</span>,</span>
+<span>    <span class="st">"STRINGdb"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Install Bioconductor packages</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="va">bioc_packages</span>, ask <span class="op">=</span> <span class="cn">FALSE</span>, update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Install CRAN packages</span></span>
+<span><span class="va">cran_packages</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span></span>
+<span>    <span class="st">"ggplot2"</span>,</span>
+<span>    <span class="st">"impute"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">install.packages</span><span class="op">(</span><span class="va">cran_packages</span><span class="op">)</span></span></code></pre>
 </div>
 <p>We will use RNA-seq data from Fu et al., 2015 (<a href="https://www.ncbi.nlm.nih.gov/pubmed/25730472" class="external-link uri">https://www.ncbi.nlm.nih.gov/pubmed/25730472</a>).</p>
-<p>We have also provided the data we will be using within the GitHub
-repo. To access them:</p>
+<p>We have provided the data we will be using within the GitHub repo. To
+access them:</p>
 <ul><li><a href="data/limma-voom_basalpregnant-basallactate">limma-voom_basalpregnant-basallactate</a></li>
 <li><a href="data/limma-voom_luminalpregnant-luminallactate">limma-voom_luminalpregnant-luminallactate</a></li>
 <li><a href="data/seqdata">seqdata</a></li>
@@ -394,23 +418,11 @@ repo. To access them:</p>
 <li><a href="data/factordata">factordata</a></li>
 <li><a href="data/limma-voom_filtered_counts">filteredcounts</a></li>
 <li><a href="%C3%9Fdata/BrowseTF%20TcoF-DB.csv">mouseTFs</a></li>
-</ul><div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co">#To retrieve files from GitHub</span></span>
-<span></span>
-<span><span class="va">debasal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/limma-voom_basalpregnant-basallactate"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="va">deluminal</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/limma-voom_luminalpregnant-luminallactate"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="va">seqdata</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/seqdata"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="fu">load</span><span class="op">(</span><span class="st">"data/mouse_hallmark_sets.RData"</span><span class="op">)</span> <span class="co">#loads as Mm.H</span></span>
-<span><span class="va">factordata</span> <span class="op">&lt;-</span> <span class="fu">read.table</span><span class="op">(</span><span class="st">"data/factordata"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="va">filteredcounts</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/limma-voom_filtered_counts"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre>
-</div>
+</ul><p>The code assumes that these files are in a folder called “data” but
+you can adjust the code to the correct download path as needed.</p>
 <p>You can load some of the data directly from Zenodo into your RStudio
 enviornment with the following code:</p>
-<div class="codewrapper sourceCode" id="cb3">
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
