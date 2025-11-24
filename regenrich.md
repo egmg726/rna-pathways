@@ -94,18 +94,8 @@ object = RegenrichSet(expr = logcounts,
                       enrichTest = "FET") # enrichment analysis method
 
 print(object)
-```
 
-``` output
-RegenrichSet object 
- assayData: 15804 rows, 12 columns (filtered 0 rows)
-```
 
-``` output
- Differential expression analysis needs to be performed.
-```
-
-``` r
 # Perform RegEnrich analysis
 set.seed(123)
 
@@ -118,7 +108,11 @@ object = regenrich_diffExpr(object) %>%
 # Obtain results (ranked regulators)
 res = results_score(object)
 print(res)
+
+# Visualise regulator-target expression for selected regulator
+plotRegTarExpr(object, reg = "71371")
 ```
+
 
 ``` output
 # A tibble: 653 × 5
@@ -137,12 +131,8 @@ print(res)
 # ℹ 643 more rows
 ```
 
-``` r
-# Visualise regulator-target expression for selected regulator
-plotRegTarExpr(object, reg = "71371")
-```
+<img src="fig/regenrich-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
-<img src="fig/regenrich-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 <details>
 <summary><strong>Click to expand: Understanding design matrices and contrasts</strong></summary>
 
