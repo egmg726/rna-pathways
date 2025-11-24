@@ -277,6 +277,54 @@
 </div>
 <!--/div.accordion-flush-->
 
+<div class="accordion accordion-flush" id="accordionFlush5">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading5">
+        <a href="fgsea.html">4. Gene set enrichment analysis with <code>fgsea</code></a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush6">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading6">
+        <a href="regenrich.html">5. Analysis with <code>RegEnrich</code></a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush7">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading7">
+        <a href="stringdb.html">6. Interaction networks with <code>StringDB</code></a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="conclusion.html">7. Conclusion</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
                 </div>
               </div>
             </div>
@@ -353,6 +401,60 @@ pathways.</p></li>
 (<code>gseKEGG</code>) methods provide complementary insights.</p></li>
 <li><p><code>pathview</code> enables visual interpretation of
 pathway-level expression changes.</p></li>
+</ul></section><section id="fgsea"><h2 class="section-heading"><a href="fgsea.html">Gene set enrichment analysis with <code>fgsea</code></a></h2>
+<hr class="half-width">
+<ul>
+<li>GSEA evaluates enrichment across a ranked list of all genes, not
+just a subset of significant ones.</li>
+<li>The <code>fgsea</code> package provides a fast implementation of
+GSEA suitable for large RNA-seq datasets.</li>
+<li>A positive NES indicates enrichment among up-regulated genes, while
+a negative NES indicates enrichment among down-regulated genes.</li>
+<li>
+<code>plotGseaTable()</code> and <code>plotEnrichment()</code> help
+visualise how pathways behave across the ranked gene list.</li>
+<li>Compared with <code>clusterProfiler</code>s GSEA functions,
+<code>fgsea</code> focuses on speed and flexibility, while
+<code>clusterProfiler</code> provides tighter integration with specific
+databases (e.g., GO, KEGG) and additional plotting helpers.</li>
+</ul></section><section id="regenrich"><h2 class="section-heading"><a href="regenrich.html">Analysis with <code>RegEnrich</code></a></h2>
+<hr class="half-width">
+<ul>
+<li>
+<code>RegEnrich</code> helps identify potential regulatory drivers
+(e.g. TFs) behind observed gene expression changes.</li>
+<li>The package’s built-in TF dataset <code>(data(TFs))</code> is
+human-specific and not suitable for mouse RNA-seq analysis.</li>
+<li>For mouse data, a mouse-specific TF list (e.g. from TcoF-DB) must be
+supplied via the reg argument.</li>
+<li>A RegenrichSet object requires: an expression matrix, sample
+metadata, a regulator list, and a design/contrast specification.</li>
+</ul></section><section id="stringdb"><h2 class="section-heading"><a href="stringdb.html">Interaction networks with <code>StringDB</code></a></h2>
+<hr class="half-width">
+<ul>
+<li><p><code>STRINGdb</code> links your genes to protein–protein
+interaction networks from the STRING database.</p></li>
+<li><p>Mapping from gene IDs (e.g. ENTREZ) to STRING IDs is a crucial
+first step.</p></li>
+<li><p>Network visualisation can reveal modules of interconnected DE
+genes that may not be obvious from lists or tables.</p></li>
+<li><p>STRING provides its own functional enrichment, which can
+complement results from <code>clusterProfiler</code> and
+<code>fgsea</code>.</p></li>
+</ul></section><section id="conclusion"><h2 class="section-heading"><a href="conclusion.html">Conclusion</a></h2>
+<hr class="half-width">
+<ul>
+<li>Enrichment methods help translate gene-level changes into biological
+meaning.<br>
+</li>
+<li>Different tools (ORA, GSEA, network-based methods) answer different
+but complementary questions.<br>
+</li>
+<li>Combining methods provides stronger and more interpretable
+biological insights.<br>
+</li>
+<li>Functional enrichment is an essential component of any RNA-seq
+analysis workflow.</li>
 </ul></section>
 </div>
     </main>
