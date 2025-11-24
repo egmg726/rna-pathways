@@ -236,6 +236,15 @@
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
 
+<div class="accordion accordion-flush" id="accordionFlush4">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading4">
+        <a href="section1.html">3. KEGG enrichment analysis with <code>clusterProfiler</code></a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
                 </div>
               </div>
             </div>
@@ -415,38 +424,13 @@ format – <code>Mm.H</code>
 5 4.760597  18.00994 1.905713e-10 5.366685e-07 14.33472
 6 3.036519  18.60321 2.037466e-10 5.366685e-07 14.35640</code></pre>
 </div>
+<p>You can also view the entire file in a different tab using
+<code>View()</code>:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#To view the entire file in a different tab</span></span>
-<span><span class="fu">View</span><span class="op">(</span><span class="va">debasal</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="warning" tabindex="0"><code>Warning in View(debasal): unable to open display</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in .External2(C_dataviewer, x, title): unable to start data viewer</code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">View</span><span class="op">(</span><span class="va">factordata</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="warning" tabindex="0"><code>Warning in View(factordata): unable to open display</code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error in .External2(C_dataviewer, x, title): unable to start data viewer</code></pre>
+<code class="sourceCode R"><span><span class="fu">View</span><span class="op">(</span><span class="va">debasal</span><span class="op">)</span></span></code></pre>
 </div>
 <div id="discussion1" class="callout discussion">
 <div class="callout-square">
@@ -456,29 +440,31 @@ format – <code>Mm.H</code>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
-<p>• How many columns are there in <code>debasal</code> and
-<code>deluminal</code> objects?</p>
-<p>• What are the different types of samples in this analysis? Hint:
-Look at <code>factordata</code> file.</p>
-</div>
+<ul><li><p>How many columns are there in <code>debasal</code> and
+<code>deluminal</code> objects?</p></li>
+<li><p>What are the different types of samples in this analysis? Hint:
+Look at <code>factordata</code> file.</p></li>
+</ul></div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a></h2>
-<hr class="half-width"><div id="commonly-used-analyses-following-dge" class="callout keypoints">
+<hr class="half-width"><div id="commonly-used-analyses-following-differenital-gene-expression-dge" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
 <span class="callout-header">Key Points</span>
-<div id="commonly-used-analyses-following-dge" class="callout-inner">
-<h3 class="callout-title">Commonly used analyses following DGE</h3>
+<div id="commonly-used-analyses-following-differenital-gene-expression-dge" class="callout-inner">
+<h3 class="callout-title">Commonly used analyses following differenital
+gene expression (DGE)</h3>
 <div class="callout-content">
-<p>• Over-representation analysis (ORA): Tests whether DGE list contains
-more genes from a specific pathway or gene set</p>
-<p>• Functional class scoring (FCS): Evaluates coordinated shifts in
-expression across all gene sets</p>
-<p>• Protein-protein interactions (PPI): Maps the functional connections
-between proteins to reveal network structure or pathways involved</p>
-</div>
+<ul><li><p>Over-representation analysis (ORA): Tests whether DGE list
+contains more genes from a specific pathway or gene set</p></li>
+<li><p>Functional class scoring (FCS): Evaluates coordinated shifts in
+expression across all gene sets</p></li>
+<li><p>Protein-protein interactions (PPI): Maps the functional
+connections between proteins to reveal network structure or pathways
+involved</p></li>
+</ul></div>
 </div>
 </div>
 <!--
