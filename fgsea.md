@@ -41,15 +41,13 @@ In this part of the workshop, we will:
 - Explore the top enriched pathways
 - Visualise both multiple pathways and a single pathway in detail 
 
-## `fgsea` Setup
-Before we begin, load the packages and data needed for GSEA:
 
 
 
 
 ## Gene Set Enrichment Analysis with `fgsea`
 
-Now, let's perform Gene Set Enrichment Analysis using the `fgsea` package.
+Let's perform Gene Set Enrichment Analysis using the `fgsea` package.
 
 
 ``` r
@@ -103,7 +101,7 @@ Q:  Repeat the GSEA analysis using the `deluminal` dataset instead of `debasal`.
 2. Run `fgsea()` with the same Hallmark gene sets (`Mm.H`).  
 3. Identify the top 5 enriched pathways.  
 4. Are they different from the `debasal` results? What biological differences might explain this?
-### Solution
+:::: solution
 ```r
 # Create a ranked gene list for the deluminal contrast
 rankedgenes_df_del <- deluminal[order(deluminal$t, decreasing = FALSE),
@@ -120,6 +118,8 @@ fgseaRes_del <- fgsea(pathways = Mm.H,
 fgseaRes_del[order(pval)][1:5, ]
 Differences between fgseaRes (from debasal) and fgseaRes_del are expected and likely reflect biological differences between the two contrasts (e.g., different cell types or experimental conditions).
 ```
+::::
+
 :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: keypoints 

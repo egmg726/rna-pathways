@@ -114,22 +114,10 @@ object = regenrich_diffExpr(object) %>%
   regenrich_network() %>%
   regenrich_enrich() %>%
   regenrich_rankScore()
-```
 
-``` warning
-Warning in class(x) <- tibble_class: Setting class(x) to multiple strings
-("tbl_df", "tbl", ...); result will no longer be an S4 object
-```
-
-``` r
 # Obtain results (ranked regulators)
 res = results_score(object)
 print(res)
-```
-
-``` warning
-Warning in class(x) <- tibble_class: Setting class(x) to multiple strings
-("tbl_df", "tbl", ...); result will no longer be an S4 object
 ```
 
 ``` output
@@ -152,17 +140,6 @@ Warning in class(x) <- tibble_class: Setting class(x) to multiple strings
 ``` r
 # Visualise regulator-target expression for selected regulator
 plotRegTarExpr(object, reg = "71371")
-```
-
-``` warning
-Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-ℹ Please use tidy evaluation idioms with `aes()`.
-ℹ See also `vignette("ggplot2-in-packages")` for more information.
-ℹ The deprecated feature was likely used in the RegEnrich package.
-  Please report the issue to the authors.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.
 ```
 
 <img src="fig/regenrich-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />

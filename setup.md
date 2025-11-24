@@ -2,20 +2,24 @@
 title: Setup
 ---
 
-This workshop provides a practical introduction to functional enrichment analysis following differential expression in RNA-seq studies. We will compare two major enrichment strategies, **over-representation analysis (ORA)** and **functional class scoring (FCS)**, and discuss when each approach is most appropriate. Participants will learn how to implement these methods in R using packages including `clusterProfiler`, `fgsea`, `Reg-Enrich` and `STRINGdb`, drawing on pathway and gene-set resources such as **Gene Ontology**, **KEGG Pathway Database** and **Molecular Signatures Database**. By the end of this workshop, you will have a clear understanding of how to interpret enriched pathways in RNA-seq data. 
+This workshop provides a practical introduction to functional enrichment analysis following differential expression in RNA-seq studies. 
+We will compare two major enrichment strategies, **over-representation analysis (ORA)** and **functional class scoring (FCS)**, and discuss when each approach is most appropriate. Participants will learn how to implement these methods in R using packages including `clusterProfiler`, `fgsea`, `Reg-Enrich` and `STRINGdb`, drawing on pathway and gene-set resources such as **Gene Ontology**, **KEGG Pathway Database** and **Molecular Signatures Database**. By the end of this workshop, you will have a clear understanding of how to interpret enriched pathways in RNA-seq data. 
 
 :::: prereq
-•	Installed R and RStudio
 
-•	Have basic R knowledge
+-	Installed R and RStudio
 
-•	Completed ‘Intro to R for Biologists’ and ‘RNA-seq: From reads to counts to genes’, or equivalent
+-	Have basic R knowledge
+
+-	Completed ‘Intro to R for Biologists’ and ‘RNA-seq: From reads to counts to genes’, or equivalent
+
 ::::
 
 ## R Packages & Datasets
 
 In this workshop, we will learn how to use `clusterProfiler`, `fgsea`, `RegEnrich` and `STRINGdb` tools,
 along with related dependencies `org.Mm.eg.db`, `impute` and `preprocessCore`. 
+
 Please install the following packages:
 
 ```r
@@ -29,25 +33,21 @@ BiocManager::install(c("clusterProfiler", "fgsea", "RegEnrich","STRINGdb", "org.
 
 ```
 
+
+
 We will use RNA-seq data from Fu et al., 2015 (<https://www.ncbi.nlm.nih.gov/pubmed/25730472>). 
-Please download the following datasets from Zenodo:
 
-```r
 
-#To download files from Zenodo
 
-dataurl <- "https://zenodo.org/record/2596382/files/"
+We have also provided the data we will be using within the GitHub repo. To access them:
 
-debasal <- read.csv(paste0(dataurl,"limma-voom_basalpregnant-basallactate"), header = TRUE, sep = "\t")
-deluminal <- read.csv(paste0(dataurl,"limma-voom_luminalpregnant-luminallactate"), header = TRUE, sep = "\t")
-seqdata <- read.csv(paste0(dataurl,"seqdata"), header = TRUE, sep = "\t")
-load(paste0(dataurl,"mouse_hallmark_sets")) #loads as Mm.H
-factordata <- read.table(paste0(dataurl,"factordata"), header = TRUE, sep = "\t")
-filteredcounts <- read.csv(paste0(dataurl,"limma-voom_filtered_counts"), header = TRUE, sep = "\t")
-
-```
-
-We have also provided these datasets within the GitHub repo. To access them:
+- [limma-voom_basalpregnant-basallactate](episodes/data/limma-voom_basalpregnant-basallactate)
+- [limma-voom_luminalpregnant-luminallactate](episodes/data/limma-voom_luminalpregnant-luminallactate)
+- [seqdata](episodes/data/seqdata)
+- [mouse_hallmark_sets](episodes/data/mouse_hallmark_sets.RData)
+- [factordata](episodes/data/factordata)
+- [filteredcounts](episodes/data/limma-voom_filtered_counts)
+- [mouseTFs](episodes/ßdata/BrowseTF  TcoF-DB.csv)
 
 ```r
 
@@ -59,6 +59,24 @@ seqdata <- read.csv("data/seqdata", header = TRUE, sep = "\t")
 load("data/mouse_hallmark_sets.RData") #loads as Mm.H
 factordata <- read.table("data/factordata", header = TRUE, sep = "\t")
 filteredcounts <- read.csv("data/limma-voom_filtered_counts", header = TRUE, sep = "\t")
+
+```
+
+
+You can load some of the data directly from Zenodo into your RStudio enviornment with the following code:
+
+```r
+
+# To download files from Zenodo
+
+dataurl <- "https://zenodo.org/record/2596382/files/"
+
+debasal <- read.csv(paste0(dataurl,"limma-voom_basalpregnant-basallactate"), header = TRUE, sep = "\t")
+deluminal <- read.csv(paste0(dataurl,"limma-voom_luminalpregnant-luminallactate"), header = TRUE, sep = "\t")
+seqdata <- read.csv(paste0(dataurl,"seqdata"), header = TRUE, sep = "\t")
+load(paste0(dataurl,"mouse_hallmark_sets")) #loads as Mm.H
+factordata <- read.table(paste0(dataurl,"factordata"), header = TRUE, sep = "\t")
+filteredcounts <- read.csv(paste0(dataurl,"limma-voom_filtered_counts"), header = TRUE, sep = "\t")
 
 ```
 
