@@ -84,36 +84,19 @@ head(debasal)
 6 3.036519  18.60321 2.037466e-10 5.366685e-07 14.35640
 ```
 
+You can also view the entire file in a different tab using `View()`:
+
+
 ``` r
-#To view the entire file in a different tab
 View(debasal)
 ```
 
-``` warning
-Warning in View(debasal): unable to open display
-```
-
-``` error
-Error in .External2(C_dataviewer, x, title): unable to start data viewer
-```
-
-``` r
-View(factordata)
-```
-
-``` warning
-Warning in View(factordata): unable to open display
-```
-
-``` error
-Error in .External2(C_dataviewer, x, title): unable to start data viewer
-```
 
 ::::: challenge
 
-•	How many columns are there in `debasal` and `deluminal` objects?
+-	How many columns are there in `debasal` and `deluminal` objects?
 
-•	What are the different types of samples in this analysis? Hint: Look at `factordata` file.
+-	What are the different types of samples in this analysis? Hint: Look at `factordata` file.
 
 :::::
 
@@ -121,13 +104,13 @@ Error in .External2(C_dataviewer, x, title): unable to start data viewer
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-## Commonly used analyses following DGE
+## Commonly used analyses following differenital gene expression (DGE)
 
-•	Over-representation analysis (ORA): Tests whether DGE list contains more genes from a specific pathway or gene set
+-	Over-representation analysis (ORA): Tests whether DGE list contains more genes from a specific pathway or gene set
 
-•	Functional class scoring (FCS): Evaluates coordinated shifts in expression across all gene sets 
+-	Functional class scoring (FCS): Evaluates coordinated shifts in expression across all gene sets 
 
-•	Protein-protein interactions (PPI): Maps the functional connections between proteins to reveal network structure or pathways involved
+-	Protein-protein interactions (PPI): Maps the functional connections between proteins to reveal network structure or pathways involved
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
