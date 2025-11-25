@@ -59,9 +59,11 @@ Before we set up `RegEnrich` properly, we will explore the default TF list that 
 ## Using a mouse TF list from TcoF-DB
 The TFs included in the package are human-only, so for mouse data we must provide our own list of mouse transcription factors.
 
-For this workshop, we will use mouse TFs from TcoF-DB: https://tools.sschmeier.com/tcof/home/
+For this workshop, we will use mouse TFs from [TcoF-DB](https://tools.sschmeier.com/tcof/home/).
+You can directly download the file that we will be using from [this link](episodes/data/BrowseTF  TcoF-DB.csv).
 
 The code below shows how to:
+
 1. Load a mouse TF list from a CSV file.
 2. Prepare an expression matrix for RegEnrich.
 3. Create a RegenrichSet object.
@@ -70,7 +72,7 @@ The code below shows how to:
 
 ``` r
 # Load mouse transcription factors (must include a "GeneID" column)
-mouseTFs <- read.csv('data/BrowseTF  TcoF-DB.csv')
+mouseTFs <- read.csv('data/BrowseTF_TcoF-DB.csv')
 
 # Prepare expression matrix: genes x samples
 logcounts <- filteredcounts[,4:15]
@@ -94,8 +96,18 @@ object = RegenrichSet(expr = logcounts,
                       enrichTest = "FET") # enrichment analysis method
 
 print(object)
+```
+
+:::: caution
+
+The `regenrich_diffExp` step can take a while. We have already run this step for you and you can [download the `object` data directly using this link](episodes/data/regenrich_object.RData).
 
 
+:::
+
+
+
+``` r
 # Perform RegEnrich analysis
 set.seed(123)
 
@@ -105,6 +117,7 @@ object = regenrich_diffExpr(object) %>%
   regenrich_enrich() %>%
   regenrich_rankScore()
 
+
 # Obtain results (ranked regulators)
 res = results_score(object)
 print(res)
@@ -112,6 +125,9 @@ print(res)
 # Visualise regulator-target expression for selected regulator
 plotRegTarExpr(object, reg = "71371")
 ```
+
+
+
 
 
 ``` output
@@ -131,10 +147,11 @@ plotRegTarExpr(object, reg = "71371")
 # ℹ 643 more rows
 ```
 
-<img src="fig/regenrich-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="fig/regenrich-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
-<details>
-<summary><strong>Click to expand: Understanding design matrices and contrasts</strong></summary>
+:::: spoiler
+
+## Understanding design matrices and contrasts
 
 `RegEnrich` uses a design matrix and contrast in a similar way to limma: they define which groups you want to compare.
 
@@ -158,7 +175,11 @@ means:
 
 The exact mapping of positions in the contrast to group names depends on the order of the factor levels in `factordata$CellTypeStatus`.
 
-</details>
+
+::::
+
+
+
 
 
 :::::::::::::::::::::::::::::::::::: challenge
@@ -174,8 +195,9 @@ levels(factordata$CellTypeStatus)
 2. Which group is used as the baseline (reference) in the design matrix?
 3. Write a contrast that compares Luminal pregnant vs Basal pregnant.
 4. In words, what biological question does that contrast represent?
-:::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::: solution
+
 The number of groups equals the number of unique levels returned by
 `levels(factordata$CellTypeStatus)`
 
@@ -208,6 +230,8 @@ The biological question this is answering is:
 That is, regulators that functionally distinguish these two cell states.
 
 :::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
 
 ## Inspecting and interpreting RegEnrich results
 The `results_score(object)` call returns a table of regulators with associated statistics.
