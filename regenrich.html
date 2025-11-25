@@ -452,7 +452,7 @@ directly download the file that we will be using from <a href="data/BrowseTF%20T
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load mouse transcription factors (must include a "GeneID" column)</span></span>
-<span><span class="va">mouseTFs</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">'data/BrowseTF  TcoF-DB.csv'</span><span class="op">)</span></span>
+<span><span class="va">mouseTFs</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">'data/BrowseTF_TcoF-DB.csv'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Prepare expression matrix: genes x samples</span></span>
 <span><span class="va">logcounts</span> <span class="op">&lt;-</span> <span class="va">filteredcounts</span><span class="op">[</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">15</span><span class="op">]</span></span>
