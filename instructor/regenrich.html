@@ -531,15 +531,13 @@ directly using this link</a>.</p>
 10 21833        8.53          41.3 -6.50  1.48
 # ℹ 643 more rows</code></pre>
 </div>
-<figure><img src="../fig/regenrich-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="understanding-design-matrices-and-contrasts" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="understanding-design-matrices-and-contrasts" class="callout-inner">
-<h3 class="callout-title">Understanding design matrices and
-contrasts</h3>
-<div class="callout-content">
+<figure><img src="../fig/regenrich-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Understanding design matrices and contrasts </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div class="accordion-body">
 <p><code>RegEnrich</code> uses a design matrix and contrast in a similar
 way to limma: they define which groups you want to compare.</p>
 <p>We create a design matrix from a factor in our sample metadata:</p>
@@ -559,11 +557,12 @@ on the order of the factor levels in
 </div>
 </div>
 </div>
-<div id="test-your-understanding-contrasts" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<div id="test-your-understanding-contrasts" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
 <div id="test-your-understanding-contrasts" class="callout-inner">
 <h3 class="callout-title">Test your understanding: contrasts</h3>
 <div class="callout-content">
@@ -590,7 +589,7 @@ represent?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The number of groups equals the number of unique levels returned by
 <code>levels(factordata$CellTypeStatus)</code></p>
