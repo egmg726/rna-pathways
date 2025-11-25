@@ -5,6 +5,8 @@ title: Setup
 This workshop provides a practical introduction to functional enrichment analysis following differential expression in RNA-seq studies. 
 We will compare two major enrichment strategies, **over-representation analysis (ORA)** and **functional class scoring (FCS)**, and discuss when each approach is most appropriate. Participants will learn how to implement these methods in R using packages including `clusterProfiler`, `fgsea`, `Reg-Enrich` and `STRINGdb`, drawing on pathway and gene-set resources such as **Gene Ontology**, **KEGG Pathway Database** and **Molecular Signatures Database**. By the end of this workshop, you will have a clear understanding of how to interpret enriched pathways in RNA-seq data. 
 
+This workshop is largely based on the Galaxy-based workshop [RNA-seq genes to pathways](https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-genes-to-pathways/tutorial.html) on the Galaxy Training Network. 
+
 :::: prereq
 
 -	Installed R and RStudio
@@ -60,7 +62,8 @@ install.packages(cran_packages)
 
 
 
-We will use RNA-seq data from Fu et al., 2015 (<https://www.ncbi.nlm.nih.gov/pubmed/25730472>). 
+The original dataset is from [Fu et al., 2015](<https://www.ncbi.nlm.nih.gov/pubmed/25730472>) and described in the
+[this tutorial](https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-genes-to-pathways/tutorial.html).
 
 We have provided the data we will be using within the GitHub repo. To access them:
 
@@ -107,3 +110,10 @@ Attendees are required to bring their own laptop computers. **Please ensure you 
 ::::
 
 
+## Citations
+
+- Maria Doyle, Belinda Phipson, 3: RNA-seq genes to pathways (Galaxy Training Materials). https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-genes-to-pathways/tutorial.html Online; accessed Tue Nov 25 2025
+
+- Hiltemann, Saskia, Rasche, Helena et al., 2023 Galaxy Training: A Powerful Framework for Teaching! PLOS Computational Biology 10.1371/journal.pcbi.1010752
+
+- Batut et al., 2018 Community-Driven Data Analysis Training for Biology Cell Systems 10.1016/j.cels.2018.05.012
