@@ -106,7 +106,7 @@ The code below shows how to:
 
 ```{r, eval=FALSE}
 # Load mouse transcription factors (must include a "GeneID" column)
-mouseTFs <- read.csv('data/BrowseTF  TcoF-DB.csv')
+mouseTFs <- read.csv('data/BrowseTF_TcoF-DB.csv')
 
 # Prepare expression matrix: genes x samples
 logcounts <- filteredcounts[,4:15]
@@ -172,7 +172,7 @@ plotRegTarExpr(object, reg = "71371")
 
 ```{r, echo=FALSE,warning=FALSE}
 # Load mouse transcription factors (must include a "GeneID" column)
-mouseTFs <- read.csv('data/BrowseTF  TcoF-DB.csv')
+mouseTFs <- read.csv('data/BrowseTF_TcoF-DB.csv')
 
 # Prepare expression matrix: genes x samples
 logcounts <- filteredcounts[,4:15]
