@@ -398,11 +398,14 @@ pathways that might be missed by threshold-based methods.</p>
 <p>The <code>fgsea</code> package implements a fast,
 permutation-efficient version of the original Broad Institute GSEA
 algorithm, allowing thousands of pathways to be tested quickly.</p>
-<p>In this part of the workshop, we will: - Create a ranked list of
-genes from the ‘debasal’ dataset - Run ‘fgsea()’ using the mouse
-Hallmark gene sets ‘(Mm.H)’. - Explore the top enriched pathways -
-Visualise both multiple pathways and a single pathway in detail</p>
-</section><section><h2 class="section-heading" id="gene-set-enrichment-analysis-with-fgsea">Gene Set Enrichment Analysis with <code>fgsea</code>
+<p>In this part of the workshop, we will:</p>
+<ul><li>Create a ranked list of genes from the <code>debasal</code>
+dataset</li>
+<li>Run <code>fgsea()</code> using the mouse Hallmark gene sets
+<code>(Mm.H)</code>.</li>
+<li>Explore the top enriched pathways</li>
+<li>Visualise both multiple pathways and a single pathway in detail</li>
+</ul></section><section><h2 class="section-heading" id="gene-set-enrichment-analysis-with-fgsea">Gene Set Enrichment Analysis with <code>fgsea</code>
 <a class="anchor" aria-label="anchor" href="#gene-set-enrichment-analysis-with-fgsea"></a></h2>
 <hr class="half-width"><p>Let’s perform Gene Set Enrichment Analysis using the
 <code>fgsea</code> package.</p>
@@ -449,16 +452,16 @@ Visualise both multiple pathways and a single pathway in detail</p>
 <span><span class="co"># Visualise a single pathway: running enrichment score vs. ranked genes.</span></span>
 <span><span class="fu">plotEnrichment</span><span class="op">(</span><span class="va">Mm.H</span><span class="op">[[</span><span class="va">topPathwaysUp</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>, <span class="va">rankedgenes</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="va">topPathwaysUp</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre>
 </div>
-<figure><img src="../fig/fgsea-rendered-fgsea-analysis-2.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="apply-fgsea-to-the-deluminal-contrast" class="callout discussion">
+<figure><img src="../fig/fgsea-rendered-fgsea-analysis-2.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div id="apply-fgsea-to-the-deluminal-contrast" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
+<span class="callout-header">Challenge</span>
 <div id="apply-fgsea-to-the-deluminal-contrast" class="callout-inner">
 <h3 class="callout-title">Apply fgsea to the <em>deluminal</em>
 contrast</h3>
 <div class="callout-content">
-<p>Q: Repeat the GSEA analysis using the <code>deluminal</code> dataset
+<p>Repeat the GSEA analysis using the <code>deluminal</code> dataset
 instead of <code>debasal</code>.</p>
 <ol style="list-style-type: decimal"><li>Create a ranked gene list using the <code>t</code> statistic from
 <code>deluminal</code>.<br></li>
@@ -466,8 +469,18 @@ instead of <code>debasal</code>.</p>
 (<code>Mm.H</code>).<br></li>
 <li>Identify the top 5 enriched pathways.<br></li>
 <li>Are they different from the <code>debasal</code> results? What
-biological differences might explain this? :::: solution</li>
-</ol><div class="codewrapper sourceCode" id="cb3">
+biological differences might explain this?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode r" tabindex="0"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Create a ranked gene list for the deluminal contrast</span></span>
@@ -488,7 +501,7 @@ biological differences might explain this? :::: solution</li>
 </div>
 </div>
 </div>
-<p>:::::::::::::::::::::::::::::::::::::::::::::::</p>
+</div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
