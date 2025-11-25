@@ -96,7 +96,7 @@ We can then use `dotplot()` function to visualise the results in the form of a d
 dotplot(ego)
 ```
 
-<img src="fig/clusterprofiler-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+<img src="fig/02clusterprofiler-rendered-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 ::::: challenge
 
@@ -135,12 +135,12 @@ GO:0000779 GO:0000779 condensed chromosome, centromeric region     175
 GO:0000775 GO:0000775           chromosome, centromeric region     240
 GO:0044391 GO:0044391                        ribosomal subunit     173
            enrichmentScore      NES       pvalue     p.adjust       qvalue rank
-GO:0030684       0.6638177 2.351093 1.000000e-10 3.300000e-09 2.252632e-09 3377
-GO:0022626       0.6468668 2.305658 1.000000e-10 3.300000e-09 2.252632e-09 4038
-GO:0000776       0.5705673 2.136805 1.000000e-10 3.300000e-09 2.252632e-09 1254
-GO:0000779       0.5655402 2.128528 1.000000e-10 3.300000e-09 2.252632e-09 1254
-GO:0000775       0.5303003 2.059975 1.000000e-10 3.300000e-09 2.252632e-09 1417
-GO:0044391       0.5545608 2.086800 4.612027e-10 1.268308e-08 8.657665e-09 4724
+GO:0030684       0.6638177 2.397897 1.000000e-10 3.300000e-09 2.210526e-09 3377
+GO:0022626       0.6468668 2.359745 1.000000e-10 3.300000e-09 2.210526e-09 4038
+GO:0000776       0.5705673 2.180680 1.000000e-10 3.300000e-09 2.210526e-09 1254
+GO:0000779       0.5655402 2.179848 1.000000e-10 3.300000e-09 2.210526e-09 1254
+GO:0000775       0.5303003 2.087070 1.000000e-10 3.300000e-09 2.210526e-09 1417
+GO:0044391       0.5545608 2.134280 2.856216e-10 7.854594e-09 5.261450e-09 4724
                              leading_edge
 GO:0030684 tags=64%, list=21%, signal=51%
 GO:0022626 tags=76%, list=26%, signal=57%
@@ -161,7 +161,7 @@ GO:0044391 16785/56040/269261/20084/56282/19982/66973/68436/22186/78294/67186/67
 dotplot(ego3)
 ```
 
-<img src="fig/clusterprofiler-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="fig/02clusterprofiler-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 We can also use the `gseaplot()` function to visualise GSEA result for a specific gene set. In this example, we select the top-ranked enriched GO term (geneSetID = 1). The result-ing plot displays how genes contributing to the enrichment of this GO term are distributed in the ranked gene list. 
 
@@ -170,7 +170,7 @@ We can also use the `gseaplot()` function to visualise GSEA result for a specifi
 gseaplot(ego3, by = "all", title = ego3$Description[1], geneSetID = 1)
 ```
 
-<img src="fig/clusterprofiler-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="fig/02clusterprofiler-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 

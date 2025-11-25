@@ -39,9 +39,6 @@ In this lesson we will:
 
 
 ``` r
-# Load the STRINGdb package
-
-
 # Initialize STRINGdb for mouse (taxonomy ID: 10090)
 string_db <- STRINGdb$new(version = "12", species = 10090, score_threshold = 400, input_directory = "")
 
@@ -59,7 +56,7 @@ Warning:  we couldn't map to STRING 2% of your identifiers
 string_db$plot_network(top200_mapped$STRING_id)
 ```
 
-<img src="fig/stringdb-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="fig/06stringdb-rendered-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # Get functional enrichment (GO, KEGG, Reactome)

@@ -180,7 +180,7 @@ This dotplot summarises which KEGG pathways are enriched, how many genes contrib
 dotplot(kk2, showCategory = 10, title = "Enriched Pathways" , split=".sign") + facet_grid(.~.sign)
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="fig/03kegg-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 ### Similarity-based network plots
 Next, we can explore how the enriched pathways relate to one another.  
 The enrichment map groups pathways that share many genes, helping us see broader biological themes rather than isolated pathways.
@@ -201,7 +201,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 generated.
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="fig/03kegg-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 To understand which genes drive these pathways, we can use a `cnetplot`.  
 This visualisation links genes to the pathways they belong to and highlights “hub genes” that appear in multiple pathways.
 
@@ -215,7 +215,7 @@ Warning: ggrepel: 174 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps
 ```
 
-<img src="fig/section1-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="fig/03kegg-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 ### Ridge plot
 We can also inspect the distribution of enrichment scores across pathways.  
 The ridgeplot shows how strongly and broadly each pathway is enriched across the ranked gene list.
@@ -243,13 +243,13 @@ mmu04060 mmu04060 Cytokine-cytokine receptor interaction     177
 mmu04110 mmu04110                             Cell cycle     153
 mmu03008 mmu03008      Ribosome biogenesis in eukaryotes      76
 mmu05323 mmu05323                   Rheumatoid arthritis      66
-         enrichmentScore      NES       pvalue     p.adjust      qvalue rank
-mmu05171       0.5006706 1.947964 0.0001144034 0.0001144034 0.004620317 3724
-mmu03010       0.5814136 2.234120 0.0001167542 0.0001167542 0.004620317 4733
-mmu04060       0.5334229 2.037897 0.0001175917 0.0001175917 0.004620317 2003
-mmu04110       0.5682774 2.135048 0.0001200048 0.0001200048 0.004620317 1287
-mmu03008       0.6209460 2.126441 0.0001328551 0.0001328551 0.004620317 3377
-mmu05323       0.6825391 2.288182 0.0001357958 0.0001357958 0.004620317 1971
+         enrichmentScore      NES       pvalue     p.adjust     qvalue rank
+mmu05171       0.5006706 1.943760 0.0001152074 0.0001152074 0.00384192 3724
+mmu03010       0.5814136 2.229560 0.0001174536 0.0001174536 0.00384192 4733
+mmu04060       0.5334229 2.031561 0.0001183572 0.0001183572 0.00384192 2003
+mmu04110       0.5682774 2.132937 0.0001210214 0.0001210214 0.00384192 1287
+mmu03008       0.6209460 2.128643 0.0001336005 0.0001336005 0.00384192 3377
+mmu05323       0.6825391 2.287368 0.0001364256 0.0001364256 0.00384192 1971
                            leading_edge
 mmu05171 tags=59%, list=24%, signal=46%
 mmu03010 tags=67%, list=30%, signal=48%

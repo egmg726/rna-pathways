@@ -84,7 +84,7 @@ plotGseaTable(Mm.H[topPathways], rankedgenes, fgseaRes,
               gseaParam=0.5)
 ```
 
-<img src="fig/fgsea-rendered-fgsea-analysis-1.png" style="display: block; margin: auto;" />
+<img src="fig/04fgsea-rendered-fgsea-analysis-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # Plot the enrichment curve for the top pathway
@@ -92,7 +92,7 @@ plotGseaTable(Mm.H[topPathways], rankedgenes, fgseaRes,
 plotEnrichment(Mm.H[[topPathwaysUp[1]]], rankedgenes) + labs(title = topPathwaysUp[1])
 ```
 
-<img src="fig/fgsea-rendered-fgsea-analysis-2.png" style="display: block; margin: auto;" />
+<img src="fig/04fgsea-rendered-fgsea-analysis-2.png" style="display: block; margin: auto;" />
 
 :::::::::::::::::::::::::::::::::::: challenge
 ## Apply fgsea to the *deluminal* contrast 

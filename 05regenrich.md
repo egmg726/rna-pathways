@@ -147,7 +147,7 @@ plotRegTarExpr(object, reg = "71371")
 # ℹ 643 more rows
 ```
 
-<img src="fig/regenrich-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="fig/05regenrich-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 :::: spoiler
 
