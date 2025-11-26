@@ -22,7 +22,8 @@ exercises: 2
 
 
 
-
+## Introduction
+The KEGG (Kyoto Encyclopedia of Genes and Genomes) database links genes to curated biological pathways, offering a powerful foundation for understanding cellular functions at a systems level and making meaningful biological interpretations. `clusterProfiler` allows us to access KEGG and apply both ORA (using `enrichKEGG` function) and GSEA (using `gseKEGG` function) to extract pathway-level insights from our RNA-seq data.
 
 ## KEGG analysis
 
@@ -44,6 +45,10 @@ search_kegg_organism(kegg_organism, by='kegg_code')
 ```
 
 ## Over-representation analysis with `enrichKEGG`
+To run ORA using KEGG database, we need to specify the gene list, KEGG organism code and p-value cut-off. In this example, we take the top 500 genes from the ranked gene list `debasal_genelist`, specify the organism code `mmu` (defined as `kegg_organism) and use 0.05 as the p-value cut-off.
+
+We can use `head()` function to briefly inspect the results of `enrichKEGG`.
+
 
 
 ``` r
@@ -117,7 +122,7 @@ mmu04914    10
 ```
 
 ## GSEA-style KEGG enrichment with `gseKEGG`
-This method uses the entire ranked gene list rather than an arbitrary cutoff.
+Similar to previous enrichment analysis with GO database, we can also perform a GSEA-style enrichment using the KEGG database. To do so, we use the `gseKEGG` and specify the entire ranked gene list (`debasal_genelist`) rather than an arbitrary cutoff. In this example, we test KEGG pathways between 3 and 800 genes using 10,000 permutations and NCBI Gene IDs. Results are filtered using a p-value cut-off of 0.05.
 
 ``` r
 kk2 <- gseKEGG(geneList     = debasal_genelist,
@@ -173,7 +178,7 @@ done...
 ```
 ## Visualising enriched pathways
 ### Dotplot
-Before we look at individual pathways in detail, we can visualise the overall enrichment results.  
+Before we look at individual pathways in detail, we can visualise the overall enrichment results using `dotplot()`.  
 This dotplot summarises which KEGG pathways are enriched, how many genes contribute to each pathway, and how significant each one is.
 
 ``` r
@@ -184,6 +189,8 @@ dotplot(kk2, showCategory = 10, title = "Enriched Pathways" , split=".sign") + f
 ### Similarity-based network plots
 Next, we can explore how the enriched pathways relate to one another.  
 The enrichment map groups pathways that share many genes, helping us see broader biological themes rather than isolated pathways.
+In this case, `pairwise_termsim()` function calculates the similarity between enriched KEGG pathways and produces a similarity matrix that quantifies their relationship. The `emapplot()`generates an enrichment map using the similarity matrix produced, visualising the enriched pathways as a network with nodes representing pathways and edges reflecting their similarity.
+
 
 ``` r
 kk3 <- pairwise_termsim(kk2)
@@ -202,8 +209,8 @@ generated.
 ```
 
 <img src="fig/03kegg-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
-To understand which genes drive these pathways, we can use a `cnetplot`.  
-This visualisation links genes to the pathways they belong to and highlights “hub genes” that appear in multiple pathways.
+
+We can also use `cnetplot()` to understand which genes drive these enriched pathways. This plot links genes to pathways they belong to and highlights genes that appear in multiple pathways.
 
 
 ``` r
@@ -217,8 +224,7 @@ increasing max.overlaps
 
 <img src="fig/03kegg-rendered-unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 ### Ridge plot
-We can also inspect the distribution of enrichment scores across pathways.  
-The ridgeplot shows how strongly and broadly each pathway is enriched across the ranked gene list.
+We can also inspect the distribution of enrichment scores across pathways with `ridgeplot()`. This shows how strongly and broadly each pathway is enriched across the ranked gene list using overlapping density curves. 
 
 
 ``` r
@@ -244,12 +250,12 @@ mmu04110 mmu04110                             Cell cycle     153
 mmu05152 mmu05152                           Tuberculosis     132
 mmu03008 mmu03008      Ribosome biogenesis in eukaryotes      76
          enrichmentScore      NES       pvalue     p.adjust      qvalue rank
-mmu05171       0.5006706 1.944279 0.0001142074 0.0001142074 0.004696413 3724
-mmu03010       0.5814136 2.231025 0.0001163061 0.0001163061 0.004696413 4733
-mmu04060       0.5334229 2.036520 0.0001176194 0.0001176194 0.004696413 2003
-mmu04110       0.5682774 2.133587 0.0001199760 0.0001199760 0.004696413 1287
-mmu05152       0.4908172 1.810561 0.0001229861 0.0001229861 0.004696413 2644
-mmu03008       0.6209460 2.126475 0.0001324854 0.0001324854 0.004696413 3377
+mmu05171       0.5006706 1.949685 0.0001151676 0.0001151676 0.003853163 3724
+mmu03010       0.5814136 2.233566 0.0001176056 0.0001176056 0.003853163 4733
+mmu04060       0.5334229 2.038370 0.0001186240 0.0001186240 0.003853163 2003
+mmu04110       0.5682774 2.135836 0.0001212268 0.0001212268 0.003853163 1287
+mmu05152       0.4908172 1.812171 0.0001234720 0.0001234720 0.003853163 2644
+mmu03008       0.6209460 2.132763 0.0001338509 0.0001338509 0.003853163 3377
                            leading_edge
 mmu05171 tags=59%, list=24%, signal=46%
 mmu03010 tags=67%, list=30%, signal=48%
@@ -279,8 +285,9 @@ kk3@result$ID[1]
 [1] "mmu05171"
 ```
 
+### KEGG Pathway Diagram
 Finally, we can visualise gene expression changes directly onto a KEGG pathway diagram.  
-`pathview` highlights which components of the pathway are up- or down-regulated in your analysis.
+`pathview` highlights which components of the pathway are up- or down-regulated in your enrichment analysis.
 
 
 ``` r
